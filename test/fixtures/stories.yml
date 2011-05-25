@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  release_id: 1
+  name: MyString
+  description: MyText
+  priority: 1
+  state: MyString
+  user_id: 1
+
+two:
+  release_id: 1
+  name: MyString
+  description: MyText
+  priority: 1
+  state: MyString
+  user_id: 1
