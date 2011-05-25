@@ -1,6 +1,8 @@
 Bard::Application.routes.draw do
 
 
+  resources :releases
+
   resources :tags
   resources :members
   resources :projects
