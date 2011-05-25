@@ -1,5 +1,13 @@
 Bard::Application.routes.draw do
 
+  get "users/index"
+
+  get "users/new"
+
+  get "users/edit"
+
+  get "users/show"
+
   devise_for :users
 
   root :to => 'project#index'     
