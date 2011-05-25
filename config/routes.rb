@@ -3,6 +3,14 @@ Bard::Application.routes.draw do
 
 
 
+  get "tags/index"
+
+  get "tags/show"
+
+  get "tags/edit"
+
+  get "tags/new"
+
   resources :members 
 
   devise_for :users
