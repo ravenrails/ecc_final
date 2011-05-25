@@ -5,7 +5,7 @@ class CreateStories < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.integer :priority
-      t.string :state
+      t.string :state, :default => 'New'
       t.integer :user_id
 
       t.timestamps

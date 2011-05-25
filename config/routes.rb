@@ -1,13 +1,11 @@
 Bard::Application.routes.draw do
 
-
-
-
   resources :members 
+  resources :projects 
 
   devise_for :users
 
-  root :to => 'project#index'     
+  root :to => 'projects#index'     
 
   # also Ensure you have flash messages in app/views/layouts/application.html.erb.
   #   For example:
