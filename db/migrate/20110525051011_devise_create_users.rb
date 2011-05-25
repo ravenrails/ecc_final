@@ -8,13 +8,13 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :username
       t.string :lastname
       t.string :firstname
+      t.integer :user_type_id
       t.date :bday
 
       # t.encryptable
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
       # t.token_authenticatable
-
 
       t.timestamps
     end
