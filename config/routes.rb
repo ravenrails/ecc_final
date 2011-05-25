@@ -1,12 +1,9 @@
 Bard::Application.routes.draw do
 
-  get "users/index"
 
-  get "users/new"
 
-  get "users/edit"
 
-  get "users/show"
+  resources :members 
 
   devise_for :users
 
