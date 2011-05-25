@@ -3,7 +3,7 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.string :name
       t.string :status
-      t.user_id :integer
+      t.integer :user_id
 
       t.timestamps
     end

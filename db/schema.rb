@@ -10,10 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20110525063403) do
-=======
-ActiveRecord::Schema.define(:version => 20110525061008) do
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "status"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "stories", :force => true do |t|
     t.integer  "release_id"
@@ -25,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20110525061008) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
->>>>>>> aef265ca71bd42c330615b4d27f8468bfc4e9a4a
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -41,17 +45,10 @@ ActiveRecord::Schema.define(:version => 20110525061008) do
     t.string   "username"
     t.string   "lastname"
     t.string   "firstname"
-<<<<<<< HEAD
     t.date     "bday"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin"
-=======
-    t.integer  "user_type_id"
-    t.date     "bday"
-    t.datetime "created_at"
-    t.datetime "updated_at"
->>>>>>> aef265ca71bd42c330615b4d27f8468bfc4e9a4a
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

@@ -1,5 +1,6 @@
 Bard::Application.routes.draw do
 
+<<<<<<< HEAD
 
 
 
@@ -11,11 +12,14 @@ Bard::Application.routes.draw do
 
   get "tags/new"
 
+=======
+>>>>>>> 522e5c8a874383f566ad5e75d938574bd15af100
   resources :members 
+  resources :projects 
 
   devise_for :users
 
-  root :to => 'project#index'     
+  root :to => 'projects#index'     
 
   # also Ensure you have flash messages in app/views/layouts/application.html.erb.
   #   For example:
