@@ -1,0 +1,13 @@
+<h1>Editing member</h1>
+
+<%= form_for(@member, :url => member_path(@member)) do |form| %>
+  <%= render :partial => 'form', :locals => { :f => form, :member => @member } %>
+
+  <div class="actions">
+    <%= form.submit 'Update Member' %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Show', @member_path %> |
+<%= link_to 'Back', @members_path %>
