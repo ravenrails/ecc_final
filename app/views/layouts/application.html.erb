@@ -38,9 +38,13 @@
       </div>
 
       <div id="main">
-        <%= yield %>
+        <div id="content">
+          <%= yield %>
+        </div>
       </div>
     </div>
   </div>
+
+  <div style="display: none;" id="ajax-indicator"><span>Loading...</span></div>
 </body>
 </html>

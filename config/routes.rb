@@ -5,7 +5,11 @@ Bard::Application.routes.draw do
   resources :stories
 
   namespace "admin" do
-    resources :users, :users, :projects
+    resources :users
+
+    resources :projects do
+      post 'add_member'
+    end
   end
 
   resources :releases

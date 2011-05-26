@@ -1,16 +1,66 @@
 <%= render 'navigation' %>
-
 <h1>Editing Project</h1>
 
-<%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
+<div class="tabs">
+  <ul>
+    <li><a class="" href="#info" id="tab-info">Information</a></li>
+    <li><a class="selected" href="#member" id="tab-member">Members</a></li>
+  </ul>
+</div>
 
-  <%= render :partial => 'error', :locals => { :project => @project } if @project.errors.any? %>
-  <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
+<div class="tab-div" id="info" style="display:none;">
+  <%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
+    <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
 
-  <div class="actions">
-    <%= form.submit 'Update' %>
-    <%= link_to 'Show', admin_project_path(@project), :class => 'button' %>
-    <%= link_to 'Cancel', admin_projects_path, :class => 'button' %>
+    <div class="actions">
+      <%= form.submit 'Update' %>
+      <%= link_to 'Show', admin_project_path(@project), :class => 'button' %>
+      <%= link_to 'Cancel', admin_projects_path, :class => 'button' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="tab-div" id="member">
+
+  <div style="float:left;">
+    <%= render 'members' %>
   </div>
-<% end %>
 
+  <%= form_tag 'add/member', :id => 'member_form', :style => "float:right;" do %>
+    <fieldset>
+      <legend>Members</legend>
+      <% @users.each do |user| %>
+        <%= check_box_tag 'member[]', user.id %>
+        <%= user.fullname %><br/>
+      <% end %>
+    </fieldset>
+    <fieldset>
+      <legend>Roles</legend>
+      <% @roles.each do |role| %>
+        <%= check_box_tag 'role[]', role.id %>
+        <%= role.name %><br/>
+      <% end %>
+    </fieldset>
+    <br/>
+    <a id="member_submit">Add</a>
+  <% end %>
+</div>
+
+<script>
+  $('.tabs > ul > li > a').click(function() {
+    $('.tabs > ul > li > a').removeClass('selected');
+    $(this).addClass('selected');
+
+    $('.tab-div').fadeOut();
+    $($(this).attr('href')).fadeIn();
+  });
+
+  $('#member_submit').click(function() {
+      $.ajax({
+          url: '<%= admin_project_add_member_path(@project) %>',
+          type: 'POST',
+          data: $('#member_form').serialize(),
+          dataType: 'text',
+      });
+  });
+</script>
