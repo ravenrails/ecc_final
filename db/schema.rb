@@ -14,8 +14,9 @@ ActiveRecord::Schema.define(:version => 20110525091624) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.string   "status"
-    t.integer  "user_id"
+    t.text     "description"
+    t.boolean  "display",     :default => true
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20110525091624) do
     t.string   "name"
     t.text     "description"
     t.integer  "priority"
-    t.string   "state"
-    t.integer  "user_id"
+    t.string   "state",       :default => "New"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

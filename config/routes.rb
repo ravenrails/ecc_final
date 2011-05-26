@@ -1,11 +1,14 @@
 Bard::Application.routes.draw do
 
+  namespace "admin" do
+    resources :users, :users, :projects
+  end
 
-  resources :releases
+  #resources :releases
 
-  resources :tags
-  resources :members
-  resources :projects
+  #resources :tags
+  #resources :members
+  #resources :projects
 
   devise_for :users
 
