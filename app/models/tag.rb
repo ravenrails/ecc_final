@@ -1,4 +1,7 @@
 class Tag < ActiveRecord::Base
+  belongs_to :story
+   belongs_to :creator, class => "User"
+
   def self.filter(term)
     term.gsub(/\+/, ' ')
       .gsub(/\s+/, ' ')

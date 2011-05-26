@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
     :firstname, :lastname, :bday, :is_admin
 
+  # associations:
+  has_many :projects, :foreign_key => :creator_id
+  has_many :releases, :foreign_key => :creator_id
+  has_many :stories,  :foreign_key => :creator_id
+
   def fullname
     self.firstname
   end
@@ -16,3 +21,4 @@ class User < ActiveRecord::Base
     self.is_admin
   end
 end
+
