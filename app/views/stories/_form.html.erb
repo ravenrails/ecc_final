@@ -1,0 +1,31 @@
+<%= form_for(@story) do |f| %>
+  <% if @story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story.errors.count, "error") %> prohibited this release from being saved:</h2>
+
+      <ul>
+      <% @story.errors.full_messages.each do |msg| %>`
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label 'Title' %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :priority %><br />
+    <%= f.select :priority, [['High', 'High'],['Normal', 'Normal'],['Low', 'Low']] %>
+ </div>
+  <p>default state = New</p>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

@@ -4,7 +4,7 @@ class CreateTags < ActiveRecord::Migration
       t.string :term
       t.integer :count, :null => false, :default => 0
       t.integer :story_id
-      #t.timestamps
+      t.timestamps
     end
   end
 

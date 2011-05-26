@@ -1,0 +1,29 @@
+<h1>The Story Unfolds</h1>
+
+<!- add notice for when new story is added -!>
+
+  <div class="field">
+    <%= label_tag 'Title' %>
+    <%= label_tag @story.name %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Details' %>
+    <%= label_tag @story.description %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Priority' %>
+    <%= label_tag @story.priority %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Status' %>
+    <%= label_tag @story.state %>
+  </div>
+
+  <div class="actions">
+    <%= link_to 'Edit', edit_story_path(@story), :class => 'button' %>
+    <%= link_to 'Back', stories_path, :class => 'button' %>
+  </div>
+

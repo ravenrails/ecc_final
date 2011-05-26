@@ -1,5 +1,9 @@
 Bard::Application.routes.draw do
 
+  root :to => 'projects#index'
+
+  resources :stories
+
   namespace "admin" do
     resources :users
 
@@ -8,15 +12,14 @@ Bard::Application.routes.draw do
     end
   end
 
-  #resources :releases
-
+  resources :releases
   #resources :tags
   #resources :members
   #resources :projects
 
   devise_for :users
 
-  root :to => 'projects#index'
+
 
   # also Ensure you have flash messages in app/views/layouts/application.html.erb.
   #   For example:

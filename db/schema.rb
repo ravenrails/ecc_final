@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20110526063531) do
     t.integer  "release_id"
     t.string   "name"
     t.text     "description"
-    t.integer  "priority"
+    t.string   "priority"
     t.string   "state",       :default => "New"
     t.integer  "creator_id"
     t.datetime "created_at"
@@ -64,8 +64,11 @@ ActiveRecord::Schema.define(:version => 20110526063531) do
   end
 
   create_table "tags", :force => true do |t|
-    t.string  "term"
-    t.integer "count", :default => 0, :null => false
+    t.string   "term"
+    t.integer  "count",      :default => 0, :null => false
+    t.integer  "story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
