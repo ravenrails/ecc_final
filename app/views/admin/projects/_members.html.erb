@@ -1,0 +1,44 @@
+<table class="list members">
+	<thead>
+    <tr>
+      <th>User / Group</th>
+      <th>Roles</th>
+      <th style="width:15%"></th>
+    </tr>
+  </thead>
+	<tbody>
+  <% @members.each do |member| %>
+    <tr class="member" id="member-<%= member.id %>">
+      <td class="user"><a href="<%= admin_user_path( member.id ) %>"><%= member.user.fullname %></a></td>
+      <td class="roles">
+        <span id="member-<%= member.id %>-roles"><%= member.role_names %></span><br/>
+
+        <%= form_tag 'add/member', :id => %Q[form-#{member.id}], :style => 'display:none;' do %>
+          <% @roles.each do |role| %>
+            <%= check_box_tag 'role[]', role.id, :checked => (member.role_id.include? role.id ? 'checked' : '') %>
+            <%= role.name %><br/>
+          <% end %>
+          <a id="<%= member.id %>_submit">Change</a>
+          <a class="button" onclick="hide(<%= member.id %>)">Cancel</a>
+        <% end %>
+
+      </td>
+      <td class="buttons">
+          <a href="#" onclick="show(<%= member.id %>)" class="icon icon-edit">Edit</a>
+          <a title="Delete"  href="#" class="icon icon-del">Delete</a>
+      </td>
+    </tr>
+  <% end %>
+	</tbody>
+</table>
+
+<%= javascript_tag do %>
+  function show(member_id)
+  {
+    $('#form-' + member_id).fadeIn();
+  }
+  function hide(member_id)
+  {
+    $('#form-' + member_id).fadeOut();
+  }
+<% end %>

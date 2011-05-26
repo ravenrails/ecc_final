@@ -1,6 +1,6 @@
-class CreateMembers < ActiveRecord::Migration
+class CreateProjectMembers < ActiveRecord::Migration
   def self.up
-    create_table :members do |t|
+    create_table :project_members do |t|
       t.integer :project_id
       t.integer :user_id
       t.string :role_id
@@ -10,6 +10,6 @@ class CreateMembers < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :members
+    drop_table :project_members
   end
 end

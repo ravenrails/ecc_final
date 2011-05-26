@@ -21,23 +21,29 @@
 </div>
 
 <div class="tab-div" id="member">
-  <fieldset>
-    <legend>Members</legend>
-    <% @users.each do |user| %>
-      <%= check_box_tag 'member', user.id %>
-      <%= user.fullname %><br/>
-    <% end %>
-  </fieldset>
-  <fieldset>
-    <legend>Roles</legend>
-    <% @roles.each do |role| %>
-      <%= check_box_tag 'role', role.id %>
-      <%= role.name %><br/>
-    <% end %>
-  </fieldset>
-  <br/>
 
-  <a id="member_submit">Add</a>
+  <div style="float:left;">
+    <%= render 'members' %>
+  </div>
+
+  <%= form_tag 'add/member', :id => 'member_form', :style => "float:right;" do %>
+    <fieldset>
+      <legend>Members</legend>
+      <% @users.each do |user| %>
+        <%= check_box_tag 'member[]', user.id %>
+        <%= user.fullname %><br/>
+      <% end %>
+    </fieldset>
+    <fieldset>
+      <legend>Roles</legend>
+      <% @roles.each do |role| %>
+        <%= check_box_tag 'role[]', role.id %>
+        <%= role.name %><br/>
+      <% end %>
+    </fieldset>
+    <br/>
+    <a id="member_submit">Add</a>
+  <% end %>
 </div>
 
 <script>
@@ -50,9 +56,11 @@
   });
 
   $('#member_submit').click(function() {
-    $.ajax({
-        url: '<%= add_member_admin_projects_path %>',
-
-    })
+      $.ajax({
+          url: '<%= admin_project_add_member_path(@project) %>',
+          type: 'POST',
+          data: $('#member_form').serialize(),
+          dataType: 'text',
+      });
   });
 </script>

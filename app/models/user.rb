@@ -9,9 +9,12 @@ class User < ActiveRecord::Base
     :firstname, :lastname, :bday, :is_admin
 
   # associations:
-  has_many :projects, :foreign_key => :creator_id
-  has_many :releases, :foreign_key => :creator_id
-  has_many :stories,  :foreign_key => :creator_id
+  has_many :project_members
+  has_many :projects, :through => :project_members
+  has_many :roles, :through => :project_members
+  #has_many :roles, :through => :project_members
+  #has_many :releases, :foreign_key => :creator_id
+  #has_many :stories,  :foreign_key => :creator_id
 
   def fullname
     self.firstname + ' ' + self.lastname
@@ -19,6 +22,10 @@ class User < ActiveRecord::Base
 
   def is_admin?
     self.is_admin
+  end
+
+  def role_names
+    self.roles.reduce('') { |c, x| c << ( c.empty? ? '' : ', ') << x.name }
   end
 end
 

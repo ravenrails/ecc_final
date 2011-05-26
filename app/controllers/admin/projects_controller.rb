@@ -24,6 +24,7 @@ class Admin::ProjectsController < ApplicationController
 
   def edit
     @project = Project.find(params[:id])
+    @members = @project.project_members
     @users = User.all
     @roles = Role.all
   end
@@ -45,4 +46,24 @@ class Admin::ProjectsController < ApplicationController
       end
     end
   end
+
+  def add_member
+    params[:member].each do |member|
+      ProjectMember.create(
+        :project_id => params[:project_id],
+        :user_id => member,
+        :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': '-') << s }
+      )
+    end
+
+    respond_to do |format|
+      format.js do
+        @members = Project.find(params[:id]).members
+        render :update do |page|
+          page.replace_html 'project-members', :partial => 'members'
+        end
+      end
+    end
+  end
+
 end
