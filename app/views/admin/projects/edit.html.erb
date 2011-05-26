@@ -1,0 +1,16 @@
+<%= render 'navigation' %>
+
+<h1>Editing Project</h1>
+
+<%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
+
+  <%= render :partial => 'error', :locals => { :project => @project } if @project.errors.any? %>
+  <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
+
+  <div class="actions">
+    <%= form.submit 'Update' %>
+    <%= link_to 'Show', admin_project_path(@project), :class => 'button' %>
+    <%= link_to 'Cancel', admin_projects_path, :class => 'button' %>
+  </div>
+<% end %>
+
