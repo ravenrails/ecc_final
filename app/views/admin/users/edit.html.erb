@@ -1,0 +1,16 @@
+<%= render 'navigation' %>
+
+<h1>Editing User</h1>
+
+<%= form_for(@user, :url => admin_user_path(@user)) do |form| %>
+
+  <%= render :partial => 'error', :locals => { :user => @user } if @user.errors.any? %>
+  <%= render :partial => 'form', :locals => { :f => form, :user => @user } %>
+
+  <div class="actions">
+    <%= form.submit 'Update' %>
+    <%= link_to 'Show', admin_user_path(@user), :class => 'button' %>
+    <%= link_to 'Cancel', admin_users_path, :class => 'button' %>
+  </div>
+<% end %>
+

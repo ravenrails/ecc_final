@@ -3,13 +3,44 @@
 <head>
   <title>Bard</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jquery-1.5.1.min.js', 'jquery-ui-1.8.13.custom.min.js'  %>
+  <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
+  <div id="wrapper">
+    <div id="wrapper2">
+      <div id="top-menu">
+        <div id="account">
+          <ul>
+            <li><a href="http://demo.redmine.org/my/account" class="my-account">My account</a></li>
+            <li><a href="http://demo.redmine.org/logout" class="logout">Sign out</a></li>
+          </ul>
+        </div>
+        <div id="loggedas">Logged in as <a href="http://demo.redmine.org/users/9121">animpo</a></div>
+        <ul>
+          <li><a href="http://demo.redmine.org/" class="home">Home</a></li>
+          <li><a href="http://demo.redmine.org/my/page" class="my-page">My page</a></li>
+          <li><a href="http://demo.redmine.org/projects" class="projects">Projects</a></li>
+          <li><a href="http://www.redmine.org/guide" class="help">Help</a></li>
+        </ul>
+      </div>
 
-<%= yield %>
+      <div id="header">
+        <!--div id="quick-search">
+            <form action="/search" method="get">
+              <a href="http://demo.redmine.org/search" accesskey="4">Search</a>:
+              <input accesskey="f" class="small" id="q" name="q" size="20" type="text">
+           </form>
+            <select onchange="if (this.value != '') { window.location = this.value; }"><option selected="selected" value="">Jump to a project...</option><option value="" disabled="disabled">---</option><option value="/projects/asdqweasdqwe?jump=overview">Sample Prohect</option></select>
+        </div-->
+        <h1>ECC Final Project</h1>
+      </div>
 
+      <div id="main">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
