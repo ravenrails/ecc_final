@@ -6,7 +6,7 @@ class CreateStories < ActiveRecord::Migration
       t.text :description
       t.integer :priority
       t.string :state, :default => 'New'
-      t.integer :user_id
+      t.integer :creator_id
 
       t.timestamps
     end
@@ -16,3 +16,4 @@ class CreateStories < ActiveRecord::Migration
     drop_table :stories
   end
 end
+
