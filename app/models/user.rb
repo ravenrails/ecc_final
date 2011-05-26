@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     :firstname, :lastname, :bday, :is_admin
 
   def fullname
-    self.firstname
+    self.firstname + ' ' + self.lastname
   end
 
   def is_admin?
