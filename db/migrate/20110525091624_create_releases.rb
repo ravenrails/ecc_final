@@ -4,6 +4,7 @@ class CreateReleases < ActiveRecord::Migration
       t.string  :name
       t.date    :release_date
       t.integer :creator_id
+      t.integer :project_id
 
       t.timestamps
     end

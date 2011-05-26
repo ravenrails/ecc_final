@@ -1,5 +1,6 @@
 .bundle
 db/*.sqlite3
-db/*.ecc_final
+db/development.ecc_final
+db/test.ecc_final
 log/*.log
 tmp/

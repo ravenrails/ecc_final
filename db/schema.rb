@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20110525091624) do
   create_table "releases", :force => true do |t|
     t.string   "name"
     t.date     "release_date"
+    t.integer  "creator_id"
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
