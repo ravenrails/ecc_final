@@ -11,5 +11,37 @@
 </p>
 
 
+<b>Stories:</b>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Creator</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+
+<p>
+
+  <% if @release.stories.first %>
+    <% @release.stories.each do |story| %>
+      <tr>
+        <td><%= link_to story %></td>
+        <td><%= story.name %></td>
+        <td><%= story.creator %></td>
+        <td><%= story.priority%></td>
+        <td><%= story.state%></td>
+        <td><%= link_to 'Edit', edit_release_path(release) %></td>
+        <td><%= link_to 'Destroy', release, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</p>
+
+</table>
+
+<%= link_to 'Add A Story', new_story_path %> |
 <%= link_to 'Edit', edit_release_path(@release) %> |
 <%= link_to 'Back', releases_path %>
+
