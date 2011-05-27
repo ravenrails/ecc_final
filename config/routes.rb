@@ -2,6 +2,8 @@ Bard::Application.routes.draw do
 
   root :to => 'projects#index'
 
+  devise_for :users
+
   resources :stories
 
   namespace "admin" do
@@ -14,12 +16,25 @@ Bard::Application.routes.draw do
     end
   end
 
-  resources :releases
-  #resources :tags
-  #resources :members
-  #resources :projects
 
-  devise_for :users
+  resources :projects do
+    resources :releases
+  end
+
+  resources :releases do
+    resources :stories
+  end
+
+  resources :stories do
+    resources :comments
+    resources :tags
+  end
+
+  resources :comments
+  resources :tags
+
+
+
 
 
 
