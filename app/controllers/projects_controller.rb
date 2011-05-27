@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @releases = @project.releases
   end
 
   def create
