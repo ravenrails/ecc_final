@@ -1,20 +1,29 @@
 
-<h1>Stories List</h1>
+<h1>This is stories index page, still here for admin functions</h1>
+<h2>For viewing & deleting ALL STORIES FOR ALL PROjects
+if unused, DELETE</h2>
+
+
+
+
+<h1><%= @release.name %></h1>
+<h2>Stories List</h2>
+
 
 <table>
   <tr>
     <th>ID</th>
     <th>Title</th>
     <th>Priority</th>
-    <th colspan="3">Actions</th>
+    <th colspan="2">Actions</th>
   </tr>
 
 <% if @stories %>
   <% @stories.each do |story| %>
     <tr>
-      <td><%= story.id %></td>
+      <td><%= link_to story.id, story_path(story)  %></td>
       <td><%= story.name %></td>
-      <td><%= link_to 'Show', story_path(story) %></td>
+      <td><%= story.priority %></td>
       <td><%= link_to 'Edit', edit_story_path(story) %></td>
       <td><%= link_to 'Destroy', story_path(story.id), :confirm => 'Are you sure?', :method => :delete %></td>
    </tr>

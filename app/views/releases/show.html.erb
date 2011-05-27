@@ -2,7 +2,10 @@
 
 <p>
   <b>Name:</b>
-  <%= @release.name %>
+  <%= @release.name %> &nbsp;
+  <%= link_to 'Add A Story', new_release_story_path(@release) %> |
+  <%= link_to 'Edit', edit_release_path(@release) %> |
+  <%= link_to 'Back', releases_path %>
 </p>
 
 <p>
@@ -10,9 +13,14 @@
   <%= @release.release_date %>
 </p>
 
+<br />
 
-<b>Stories:</b>
+
 <table>
+  <tr>
+    <th colspan='6'><h3>Stories</h3></th>
+  </tr>
+
   <tr>
     <th>Title</th>
     <th>Creator</th>
@@ -27,13 +35,12 @@
   <% if @release.stories.first %>
     <% @release.stories.each do |story| %>
       <tr>
-        <td><%= link_to story %></td>
-        <td><%= story.name %></td>
+        <td><%= link_to story.name, release_story_path(@release, story) %></td>
         <td><%= story.creator %></td>
         <td><%= story.priority%></td>
         <td><%= story.state%></td>
-        <td><%= link_to 'Edit', edit_release_path(release) %></td>
-        <td><%= link_to 'Destroy', release, :confirm => 'Are you sure?', :method => :delete %></td>
+        <td><%= link_to 'Edit', edit_release_story_path(@release, story) %></td>
+        <td><%= link_to 'Destroy', :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>
     <% end %>
   <% end %>
@@ -41,7 +48,7 @@
 
 </table>
 
-<%= link_to 'Add A Story', new_story_path %> |
-<%= link_to 'Edit', edit_release_path(@release) %> |
-<%= link_to 'Back', releases_path %>
+<p>
+  <%= link_to 'Add A Story', new_release_story_path(@release) %>
+</p>
 
