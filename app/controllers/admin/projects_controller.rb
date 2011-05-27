@@ -13,7 +13,7 @@ class Admin::ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to(@project, :notice => 'Project was successfully created.') }
+        format.html { redirect_to( admin_project_path( @project ), :notice => 'Project was successfully created.') }
         format.xml  { render :xml => @project, :status => :created, :location => @project }
       else
         format.html { render :action => "new" }
@@ -25,7 +25,8 @@ class Admin::ProjectsController < ApplicationController
   def edit
     @project = Project.find(params[:id])
     @members = @project.project_members
-    @users = User.all
+    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
+    @users = User.where("id NOT IN(#{member_ids})")
     @roles = Role.all
   end
 
@@ -38,7 +39,7 @@ class Admin::ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
+        format.html { redirect_to( admin_project_path( @project ), :notice => 'Project was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -52,13 +53,14 @@ class Admin::ProjectsController < ApplicationController
       ProjectMember.create(
         :project_id => params[:project_id],
         :user_id => member,
-        :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': '-') << s }
+        :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s }
       )
     end
 
+    @members = Project.find(params[:project_id]).project_members
+
     respond_to do |format|
       format.js do
-        @members = Project.find(params[:id]).members
         render :update do |page|
           page.replace_html 'project-members', :partial => 'members'
         end
@@ -66,4 +68,39 @@ class Admin::ProjectsController < ApplicationController
     end
   end
 
+  def update_member
+    @member = ProjectMember.find(params[:project_id])
+    @member.update_attributes( :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s } )
+
+    respond_to do |format|
+      format.js do
+        render :text => @member.role_id
+      end
+      format.xml  { head :ok }
+    end
+  end
+
+  def remove_member
+    @member = ProjectMember.find(params[:project_id])
+    @member.destroy
+
+    respond_to do |format|
+      format.js do
+        render :text => params[:project_id]
+      end
+      format.xml  { head :ok }
+    end
+  end
+
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+
+    respond_to do |format|
+      format.js do
+        render :text => params[:id]
+      end
+      format.xml  { head :ok }
+    end
+  end
 end

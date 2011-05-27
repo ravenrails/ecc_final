@@ -43,4 +43,18 @@ class Admin::UsersController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html 'row-' + params[:id], ''
+        end
+      end
+      format.xml  { head :ok }
+    end
+  end
 end

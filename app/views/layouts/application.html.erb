@@ -3,28 +3,14 @@
 <head>
   <title>Bard</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag 'jquery-1.5.1.min.js', 'jquery-ui-1.8.13.custom.min.js'  %>
+  <%= javascript_include_tag 'jquery-1.5.1.min.js', 'jquery-ui-1.8.13.custom.min.js', 'messages.js'  %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
   <div id="wrapper">
     <div id="wrapper2">
-      <div id="top-menu">
-        <div id="account">
-          <ul>
-            <li><a href="http://demo.redmine.org/my/account" class="my-account">My account</a></li>
-            <li><a href="http://demo.redmine.org/logout" class="logout">Sign out</a></li>
-          </ul>
-        </div>
-        <div id="loggedas">Logged in as <a href="http://demo.redmine.org/users/9121">animpo</a></div>
-        <ul>
-          <li><a href="http://demo.redmine.org/" class="home">Home</a></li>
-          <li><a href="http://demo.redmine.org/my/page" class="my-page">My page</a></li>
-          <li><a href="http://demo.redmine.org/projects" class="projects">Projects</a></li>
-          <li><a href="http://www.redmine.org/guide" class="help">Help</a></li>
-        </ul>
-      </div>
+      <%= render_top_menu() %>
 
       <div id="header">
         <!--div id="quick-search">
@@ -45,6 +31,25 @@
     </div>
   </div>
 
-  <div style="display: none;" id="ajax-indicator"><span>Loading...</span></div>
+
+  <div id="ddialog" title="" class="hidden"></div>
+
+  <div id="ddelete" title="" class="hidden" style="text-align: left;">
+    <span class="icon icon-info"></span>
+    <span>Are you sure you want to <span id="sdelete">delete</span> the selected record?</span>
+  </div>
+
+  <div id="dprocessing" title="" class="hidden" style="text-align:left;">
+    <div id="dloading">
+      <img src="<?php echo base_url(); ?>assets/images/loading.gif" class="unit" />
+      &nbsp;&nbsp;&nbsp;&nbsp;Please wait a moment...
+    </div>
+    <div id="dfinished" class="hidden">
+      <p style="vertical-align: top;">
+        <span id="ficon" class="icon"></span>
+        <span id="fmsg"></span>
+      </p>
+    </div>
+  </div>
 </body>
 </html>

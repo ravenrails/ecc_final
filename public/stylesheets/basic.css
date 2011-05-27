@@ -976,7 +976,9 @@ h2 img { vertical-align:middle; }
 a.button {
   color: #ffffff;
 }
+.hidden { display: none; }
 
+/* Form */
 .field label, .field_with_errors {
   display: inline-block;
   min-width: 150px;

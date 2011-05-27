@@ -14,5 +14,27 @@ module ApplicationHelper
     html << %{<br style="clear: both;" /></div>}
   end
 
+  def render_top_menu
+    html = %{<div id="top-menu">
+      <div id="account">
+        <ul>
+          <li><a href="http://demo.redmine.org/my/account" class="my-account">My account</a></li>
+          <li><a href="#{destroy_user_session_path}" class="logout">Sign out</a></li>
+        </ul>
+      </div>
+      <div id="loggedas">Logged in as <a href="http://demo.redmine.org/users/9121">animpo</a></div>
+      <ul>
+        <li><a href="http://demo.redmine.org/" class="home">Home</a></li>
+        <li><a href="http://demo.redmine.org/my/page" class="my-page">My page</a></li>
+        <li><a href="http://demo.redmine.org/projects" class="projects">Projects</a></li>
+      </ul>
+    </div>}
+
+    html.html_safe
+  end
+
+  def delete(url, title)
+    %Q[javascript:$.confirmDelete("#{url}", "#{title}")]
+  end
 end
 
