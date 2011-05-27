@@ -33,8 +33,8 @@ module ApplicationHelper
     html.html_safe
   end
 
-  def delete(url, title)
-    %Q[javascript:$.confirmDelete("#{url}", "#{title}")]
+  def delete(url, title, callback = '')
+    %Q[javascript:$.confirmDelete("#{url}", "#{title}", "#{callback}")]
   end
 end
 

@@ -1,46 +1,28 @@
 class ReleasesController < ApplicationController
-  # GET /releases
-  # GET /releases.xml
-  def index
-    @releases = Release.all
+  before_filter :set_project
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @releases }
-    end
-  end
-
-  # GET /releases/1
-  # GET /releases/1.xml
   def show
     @release = Release.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render :xml => @release }
     end
   end
 
-  # GET /releases/new
-  # GET /releases/new.xml
   def new
-    @release = Release.new
-
+    @release = @project.releases.new
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @release }
     end
   end
 
-  # GET /releases/1/edit
   def edit
     @release = Release.find(params[:id])
   end
 
-  # POST /releases
-  # POST /releases.xml
   def create
-    @release = Release.new(params[:release])
+    @release = @project.releases.new(params[:release])
 
     respond_to do |format|
       if @release.save
@@ -53,11 +35,8 @@ class ReleasesController < ApplicationController
     end
   end
 
-  # PUT /releases/1
-  # PUT /releases/1.xml
   def update
     @release = Release.find(params[:id])
-
     respond_to do |format|
       if @release.update_attributes(params[:release])
         format.html { redirect_to(@release, :notice => 'Release was successfully updated.') }
@@ -69,15 +48,18 @@ class ReleasesController < ApplicationController
     end
   end
 
-  # DELETE /releases/1
-  # DELETE /releases/1.xml
   def destroy
     @release = Release.find(params[:id])
     @release.destroy
-
     respond_to do |format|
       format.html { redirect_to(releases_url) }
       format.xml  { head :ok }
     end
   end
+
+  private
+
+    def set_project
+      @project = Project.find params[:project_id]
+    end
 end

@@ -23,6 +23,7 @@ class Admin::ProjectsController < ApplicationController
   end
 
   def edit
+    # batch 1
     @project = Project.find(params[:id])
     @members = @project.project_members
     member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
@@ -57,13 +58,16 @@ class Admin::ProjectsController < ApplicationController
       )
     end
 
-    @members = Project.find(params[:project_id]).project_members
+    # batch 1
+    @project = Project.find(params[:project_id])
+    @members = @project.project_members
+    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
+    @users = User.where("id NOT IN(#{member_ids})")
+    @roles = Role.all
 
     respond_to do |format|
       format.js do
-        render :update do |page|
-          page.replace_html 'project-members', :partial => 'members'
-        end
+        render 'members'
       end
     end
   end
@@ -74,19 +78,26 @@ class Admin::ProjectsController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render :text => @member.role_id
+        render 'members'
       end
       format.xml  { head :ok }
     end
   end
 
   def remove_member
-    @member = ProjectMember.find(params[:project_id])
-    @member.destroy
+    member = ProjectMember.find(params[:project_id])
+    member.destroy
+
+    # batch 1
+    @project = member.project
+    @members = @project.project_members
+    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
+    @users = User.where("id NOT IN(#{member_ids})")
+    @roles = Role.all
 
     respond_to do |format|
       format.js do
-        render :text => params[:project_id]
+        render 'members'
       end
       format.xml  { head :ok }
     end

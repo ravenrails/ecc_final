@@ -52,10 +52,10 @@ $.extend({
 		}).removeClass('hidden');
 	},
 
-	confirmDelete: function(url, title, div) {
+	confirmDelete: function(url, title, callback, div) {
 		div = div || 'ddelete';
 		title = title || '';
-    callback = 'deleteRecord({ title:"' + title + '", url:"' + url + '"})';
+    callback = callback || 'deleteRecord({ title:"' + title + '", url:"' + url + '"})';
 
 		$('#' + div).attr('title', title);
 		$.genericDialog(div, callback);

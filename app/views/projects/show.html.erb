@@ -19,8 +19,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Project</th>
-    <th>Creator</th>
     <th>Release date</th>
     <th colspan="2">Actions</th>
   </tr>
@@ -28,8 +26,6 @@
 <% @releases.each do |release| %>
   <tr>
     <td><%= link_to release.name, release %></td>
-    <td><%= release.project %></td>
-    <td><%= release.creator %></td>
     <td><%= release.release_date %></td>
     <td><%= link_to 'Edit', edit_release_path(release) %></td>
     <td><%= link_to 'Destroy', release, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -37,5 +33,25 @@
 <% end %>
 </table>
 
-<%= link_to 'New Release', new_project_release_path(@project), :class => 'button' %>
+<%= link_to 'New Release', 'javascript:newRelease()', :class => 'button' %>
 
+<div id="release-form" class="hidden">
+
+ <%= render :partial => 'releases/form',
+            :locals => {
+              :project => @project,
+              :release => @project.releases.new,
+            } %>
+</div>
+
+<script>
+   function newRelease() {
+    $('#release-form').dialog({
+      modal: true
+
+
+
+    });
+
+  }
+</script>

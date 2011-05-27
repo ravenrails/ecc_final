@@ -4,7 +4,7 @@
 <div class="tabs">
   <ul>
     <li><a class="" href="#info" id="tab-info">Information</a></li>
-    <li><a class="selected" href="#member" id="tab-member">Members</a></li>
+    <li><a class="selected" href="#members" id="tab-members">Members</a></li>
   </ul>
 </div>
 
@@ -20,30 +20,8 @@
   <% end %>
 </div>
 
-<div class="tab-div" id="member">
-
-  <div style="float:left;">
-    <%= render 'members' %>
-  </div>
-
-  <%= form_tag 'add/member', :id => 'member_form', :style => "float:right;" do %>
-    <fieldset>
-      <legend>Members</legend>
-      <% @users.each do |user| %>
-        <%= check_box_tag 'member[]', user.id %>
-        <%= user.fullname %><br/>
-      <% end %>
-    </fieldset>
-    <fieldset>
-      <legend>Roles</legend>
-      <% @roles.each do |role| %>
-        <%= check_box_tag 'role[]', role.name %>
-        <%= role.name %><br/>
-      <% end %>
-    </fieldset>
-    <br/>
-    <a id="member_submit">Add</a>
-  <% end %>
+<div class="tab-div" id="members">
+  <%= render 'members' %>
 </div>
 
 <script>
@@ -60,7 +38,56 @@
           url: '<%= admin_project_add_member_path(@project) %>',
           type: 'POST',
           data: $('#member_form').serialize(),
-          dataType: 'text',
+          dataType: 'html',
+          complete: function(xhr) {
+            $('#members').html(xhr.resposeText)
+          }
       });
   });
+
+  updateUrl = '<%= admin_project_update_member_path @project.id %>';
+  removeUrl = '<%= admin_project_remove_member_path @project.id %>';
+
+  function show(member_id)
+  {
+    $('#form-' + member_id).fadeIn();
+  }
+
+  function hide(member_id)
+  {
+    $('#form-' + member_id).fadeOut();
+  }
+
+  function removeMember(id)
+  {
+    $.loading('Removing member');
+
+    $.ajax({
+      url: removeUrl.replace('<%= @project.id %>', id),
+      type: 'POST',
+      data: '_method=DELETE',
+      dataType: 'js',
+      complete: function(xhr) {
+        $('#roles-' + memberId).html(xhr.responseText);
+        $.finished('Record Deleted');
+      }
+    });
+  }
+
+  $('[id$="_submit"]').click(function() {
+    $.loading('Updating member');
+    memberId = $(this).attr('id').replace(/\D/g, '');
+
+    $.ajax({
+      url: updateUrl.replace('<%= @project.id %>', memberId),
+      type: 'post',
+      data: $('#form-' + memberId).serialize() + '&_method=put',
+      dataType: 'text',
+      complete: function(xhr) {
+        $('#roles-' + memberId).html(xhr.responseText);
+        $.finished('Member updated.')
+      }
+    })
+  })
+
 </script>
