@@ -4,28 +4,47 @@
 
 <!- add notice for when new story is added -!>
 
-  <div class="field">
-    <%= label_tag 'Title' %>
-    <%= label_tag @story.name %>
-  </div>
+<div class="field">
+  <%= label_tag 'Title' %>
+  <%= label_tag @story.name %>
+</div>
+
+<div class="field">
+  <%= label_tag 'Details' %>
+  <%= label_tag @story.description %>
+</div>
+
+<div class="field">
+  <%= label_tag 'Priority' %>
+  <%= label_tag @story.priority %>
+</div>
+
+<div class="field">
+  <%= label_tag 'Status' %>
+  <%= label_tag @story.state %>
+</div>
+
+<div class="actions">
+  <%= link_to 'Edit', edit_release_story_path(@release, @story), :class => 'button' %>
+  <%= link_to 'Back', release_path(@release), :class => 'button' %>
+</div>
+
+
+<h1> Comments </h1>
+
+<%= form_tag story_comments_path(@story, @comment_new) ,:method=>"Post", :remote => true do%>
 
   <div class="field">
-    <%= label_tag 'Details' %>
-    <%= label_tag @story.description %>
+    <%= label_tag :content %><br />
+    <%= text_area_tag :content %>
   </div>
-
-  <div class="field">
-    <%= label_tag 'Priority' %>
-    <%= label_tag @story.priority %>
-  </div>
-
-  <div class="field">
-    <%= label_tag 'Status' %>
-    <%= label_tag @story.state %>
-  </div>
-
   <div class="actions">
-    <%= link_to 'Edit', edit_release_story_path(@release, @story), :class => 'button' %>
-    <%= link_to 'Back', release_path(@release), :class => 'button' %>
+    <%= submit_tag "Post" %>
   </div>
+
+<% end %>
+
+<div id="comments">
+  <%= render "comments" %>
+</div>
 

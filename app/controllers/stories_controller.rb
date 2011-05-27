@@ -35,6 +35,7 @@ class StoriesController < ApplicationController
 
   def show
      @story = Story.find(params[:id])
+     @comment_new = @story.comments.new
   end
 
   def update

@@ -1,0 +1,9 @@
+<% @story.comments.each do |c| %>
+<p>
+-------------<br>
+  <strong>Content:</strong> <%=c.content%><br>
+  <strong>Comment Date:</strong> <%=c.timestamp%><br>
+-------------<br>
+</p>
+<% end %>
+
