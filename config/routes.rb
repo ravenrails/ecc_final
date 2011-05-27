@@ -11,6 +11,8 @@ Bard::Application.routes.draw do
 
     resources :projects do
       post 'add_member'
+      put 'update_member'
+      delete 'remove_member'
     end
   end
 

@@ -37,7 +37,7 @@
     <fieldset>
       <legend>Roles</legend>
       <% @roles.each do |role| %>
-        <%= check_box_tag 'role[]', role.id %>
+        <%= check_box_tag 'role[]', role.name %>
         <%= role.name %><br/>
       <% end %>
     </fieldset>

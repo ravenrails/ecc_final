@@ -8,14 +8,14 @@
   </thead>
 	<tbody>
   <% @members.each do |member| %>
-    <tr class="member" id="member-<%= member.id %>">
+    <tr class="member" id="row-<%= member.id %>">
       <td class="user"><a href="<%= admin_user_path( member.id ) %>"><%= member.user.fullname %></a></td>
       <td class="roles">
-        <span id="member-<%= member.id %>-roles"><%= member.role_names %></span><br/>
+        <span id="roles-<%= member.id %>"><%= member.role_id %></span><br/>
 
         <%= form_tag 'add/member', :id => %Q[form-#{member.id}], :style => 'display:none;' do %>
           <% @roles.each do |role| %>
-            <%= check_box_tag 'role[]', role.id, :checked => (member.role_id.include? role.id ? 'checked' : '') %>
+            <%= check_box_tag 'role[]', role.name, (not member.role_id.scan(role.name).empty?) %>
             <%= role.name %><br/>
           <% end %>
           <a id="<%= member.id %>_submit">Change</a>
@@ -25,7 +25,7 @@
       </td>
       <td class="buttons">
           <a href="#" onclick="show(<%= member.id %>)" class="icon icon-edit">Edit</a>
-          <a title="Delete"  href="#" class="icon icon-del">Delete</a>
+          <a title="Delete"  href="<%= delete(admin_project_remove_member_path(member.id), 'Remove Member') %>" class="icon icon-del">Delete</a>
       </td>
     </tr>
   <% end %>
@@ -33,12 +33,31 @@
 </table>
 
 <%= javascript_tag do %>
+  updateUrl = '<%= admin_project_update_member_path @project.id %>';
+
   function show(member_id)
   {
     $('#form-' + member_id).fadeIn();
   }
+
   function hide(member_id)
   {
     $('#form-' + member_id).fadeOut();
   }
+
+  $('[id$="_submit"]').click(function() {
+    $.loading('Updating member');
+    memberId = $(this).attr('id').replace(/\D/g, '');
+
+    $.ajax({
+      url: updateUrl.replace('<%= @project.id %>', memberId),
+      type: 'post',
+      data: $('#form-' + memberId).serialize() + '&_method=put',
+      dataType: 'text',
+      complete: function(xhr) {
+        $('#roles-' + memberId).html(xhr.responseText);
+        $.finished('Member updated.')
+      }
+    })
+  })
 <% end %>

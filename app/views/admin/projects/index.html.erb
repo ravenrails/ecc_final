@@ -11,13 +11,13 @@
   </tr>
 
 <% @projects.each do |project| %>
-  <tr>
+  <tr id="row-<%= project.id %>">
     <td><%= project.id %></td>
-    <td><%= project.name %></td>
+    <td><%= link_to project.name, admin_project_path(project) %></td>
     <td><%= (project.display) ? 'Yes' : 'No' %></td>
-    <td><%= link_to 'Show', admin_project_path(project) %></td>
     <td><%= link_to 'Edit', edit_admin_project_path(project) %></td>
-    <td><%= link_to 'Destroy', admin_project_path(project.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy',
+            delete(admin_project_path(project.id), 'Delete Project') %></td>
   </tr>
 <% end %>
 </table>

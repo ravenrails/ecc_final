@@ -6,16 +6,16 @@
   <tr>
     <th>ID</th>
     <th>Name</th>
-    <th colspan="3">Actions</th>
+    <th colspan="2">Actions</th>
   </tr>
 
 <% @users.each do |user| %>
-  <tr>
+  <tr id="row-<%= user.id %>">
     <td><%= user.id %></td>
-    <td><%= user.fullname %></td>
-    <td><%= link_to 'Show', admin_user_path(user) %></td>
+    <td><%= link_to user.fullname, admin_user_path(user) %></td>
     <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
-    <td><%= link_to 'Destroy', admin_user_path(user.id), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy',
+            delete(admin_user_path(user.id), 'Delete User') %></td>
   </tr>
 <% end %>
 </table>
