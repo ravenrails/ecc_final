@@ -1,5 +1,41 @@
-<p id="notice"><%= notice %></p>
+
+<h2><%= @project.name %></h2>
+<div class="field">
+  <%= label_tag 'Name' %>
+  <%= @project.name %>
+</div>
+<div class="field">
+  <%= label_tag 'Description' %>
+  <%= @project.description %>
+</div>
 
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', projects_path, :class => 'button' %>
+<br/>
+<br/>
+
+
+<h3>Release(s):</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Project</th>
+    <th>Creator</th>
+    <th>Release date</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% @releases.each do |release| %>
+  <tr>
+    <td><%= link_to release.name, release %></td>
+    <td><%= release.project %></td>
+    <td><%= release.creator %></td>
+    <td><%= release.release_date %></td>
+    <td><%= link_to 'Edit', edit_release_path(release) %></td>
+    <td><%= link_to 'Destroy', release, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New Release', new_project_release_path(@project), :class => 'button' %>
+
