@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <h1>The Story Unfolds</h1>
 
 <!- add notice for when new story is added -!>
@@ -23,7 +25,7 @@
   </div>
 
   <div class="actions">
-    <%= link_to 'Edit', edit_story_path(@story), :class => 'button' %>
-    <%= link_to 'Back', stories_path, :class => 'button' %>
+    <%= link_to 'Edit', edit_release_story_path(@release, @story), :class => 'button' %>
+    <%= link_to 'Back', release_path(@release), :class => 'button' %>
   </div>
 
