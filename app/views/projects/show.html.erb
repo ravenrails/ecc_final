@@ -14,44 +14,135 @@
 <br/>
 <br/>
 
-
-<h3>Release(s):</h3>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Release date</th>
-    <th colspan="2">Actions</th>
-  </tr>
-
-<% @releases.each do |release| %>
-  <tr>
-    <td><%= link_to release.name, release %></td>
-    <td><%= release.release_date %></td>
-    <td><%= link_to 'Edit', edit_release_path(release) %></td>
-    <td><%= link_to 'Destroy', release, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<div id="release-list">
+  <%= render 'releases/list' %>
+</div>
 
 <%= link_to 'New Release', 'javascript:newRelease()', :class => 'button' %>
 
-<div id="release-form" class="hidden">
+<div id="new-release-form" class="hidden">
 
  <%= render :partial => 'releases/form',
             :locals => {
-              :project => @project,
-              :release => @project.releases.new,
+              :@project => @project,
+              :@release => @project.releases.new,
             } %>
 </div>
 
+<div id="edit-release-form" class="hidden">
+</div>
+
 <script>
-   function newRelease() {
-    $('#release-form').dialog({
-      modal: true
-
-
-
+  function newRelease()
+  {
+    $('#new-release-form').dialog({
+      resizable: false,
+      title: 'New Release',
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        'Cancel': function() {
+          $(this).dialog('close');
+        },
+        'Save': function() {
+          createRelease();
+          $(this).dialog('close');
+        }
+      },
+      close: function() {
+        $(this).dialog('destroy');
+      }
     });
-
   }
+
+  function createRelease()
+  {
+    $.loading('Creating Release');
+    var form = $('#new-release-form > form');
+
+    $.ajax({
+      url: form.attr('action'),
+      type: 'POST',
+      dataType: 'text',
+      data: form.serialize(),
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        form.reset();
+        $.finished('Release successfully created');
+      }
+    });
+  }
+  
+  function findRelease(urlPath)
+  {
+    $.loading('Retrieving Release');
+
+    $.ajax({
+      url: urlPath,
+      type: 'GET',
+      dataType: 'text',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $('#dloading').dialog('destroy');
+        editRelease();
+      }
+    });
+  }
+  
+  function editRelease()
+  {
+    $('#edit-release-form').dialog({
+      resizable: false,
+      title: 'Edit Release',
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        'Cancel': function() {
+          $(this).dialog('close');
+        },
+        'Save': function() {
+          updateRelease();
+          $(this).dialog('close');
+        }
+      },
+      close: function() {
+        $(this).dialog('destroy');
+      }
+    });
+  }
+  
+  function updateRelease()
+  {
+    $.loading('Updating Release');
+    var form = $('#edit-release-form > form');
+
+    $.ajax({
+      url: form.attr('action'),
+      type: 'POST',
+      dataType: 'text',
+      data: form.serialize() + '&method=put',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $.finished('Release successfully updated');
+      }
+    });
+  }
+  
+  function deleteRelease(urlPath)
+  {
+    $.loading('Destroying Release');
+     $.ajax({
+      url: urlPath,
+      type: 'POST',
+      data: '_method=DELETE',
+      dataType: 'text',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $.finished('Release Destroyed');
+      }
+    });
+  }
+
 </script>

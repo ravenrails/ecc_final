@@ -73,8 +73,15 @@ class Admin::ProjectsController < ApplicationController
   end
 
   def update_member
-    @member = ProjectMember.find(params[:project_id])
-    @member.update_attributes( :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s } )
+    member = ProjectMember.find(params[:project_id])
+    member.update_attributes( :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s } )
+
+	# batch 1
+    @project = member.project
+    @members = @project.project_members
+    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
+    @users = User.where("id NOT IN(#{member_ids})")
+    @roles = Role.all
 
     respond_to do |format|
       format.js do

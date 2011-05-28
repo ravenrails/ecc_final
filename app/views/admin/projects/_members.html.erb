@@ -19,7 +19,7 @@
               <%= check_box_tag 'role[]', role.name, (not member.role_id.scan(role.name).empty?) %>
               <%= role.name %><br/>
             <% end %>
-            <a id="<%= member.id %>_submit">Change</a>
+            <a id="<%= member.id %>_submit" onclick="updateMember(<%= member.id %>)">Change</a>
             <a class="button" onclick="hide(<%= member.id %>)">Cancel</a>
           <% end %>
 
@@ -50,5 +50,9 @@
     <% end %>
   </fieldset>
   <br/>
-  <a id="member_submit">Add</a>
+  <a id="member_submit" onclick="addMember();">Add</a>
 <% end %>
+
+<script>
+	$('[id$="_submit"], .button').button();
+</script>

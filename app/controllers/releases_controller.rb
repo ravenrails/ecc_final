@@ -8,29 +8,24 @@ class ReleasesController < ApplicationController
       format.xml  { render :xml => @release }
     end
   end
-
-  def new
-    @release = @project.releases.new
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @release }
-    end
-  end
-
+  
   def edit
-    @release = Release.find(params[:id])
+    @release = @project.releases.find(params[:id])
+    
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create
     @release = @project.releases.new(params[:release])
 
     respond_to do |format|
+      @releases = @project.releases
       if @release.save
-        format.html { redirect_to(@release, :notice => 'Release was successfully created.') }
-        format.xml  { render :xml => @release, :status => :created, :location => @release }
+        format.js   { render 'list' }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @release.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -39,10 +34,9 @@ class ReleasesController < ApplicationController
     @release = Release.find(params[:id])
     respond_to do |format|
       if @release.update_attributes(params[:release])
-        format.html { redirect_to(@release, :notice => 'Release was successfully updated.') }
-        format.xml  { head :ok }
+        @releases = @project.releases
+	      format.js   { render 'list' }
       else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @release.errors, :status => :unprocessable_entity }
       end
     end
@@ -52,8 +46,8 @@ class ReleasesController < ApplicationController
     @release = Release.find(params[:id])
     @release.destroy
     respond_to do |format|
-      format.html { redirect_to(releases_url) }
-      format.xml  { head :ok }
+      @releases = @project.releases
+      format.js   { render 'list' }
     end
   end
 

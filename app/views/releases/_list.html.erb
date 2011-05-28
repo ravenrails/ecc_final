@@ -1,0 +1,18 @@
+<h3>Release<%= 's' if @releases.count > 1 %>:</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Release date</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% @releases.each do |release| %>
+  <tr>
+    <td><%= link_to release.name, project_release_path(@project, release) %></td>
+    <td><%= release.release_date %></td>
+    <td><%= link_to 'Edit', '#', :onclick => %{findRelease('#{edit_project_release_path(@project, release)}')} %></td>
+    <td><%= link_to 'Destroy', 
+            delete('#', 'Delete Release', "deleteRelease('#{project_release_path(@project, release)}')") %></td>
+  </tr>
+<% end %>
+</table>

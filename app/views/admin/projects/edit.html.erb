@@ -33,17 +33,21 @@
     $($(this).attr('href')).fadeIn();
   });
 
-  $('#member_submit').click(function() {
+  function addMember() {
+
+    $.loading('Adding member');
+
       $.ajax({
           url: '<%= admin_project_add_member_path(@project) %>',
           type: 'POST',
           data: $('#member_form').serialize(),
-          dataType: 'html',
+          dataType: 'text',
           complete: function(xhr) {
-            $('#members').html(xhr.resposeText)
+            eval(xhr.responseText);
+            $.finished('Member added');
           }
       });
-  });
+  };
 
   updateUrl = '<%= admin_project_update_member_path @project.id %>';
   removeUrl = '<%= admin_project_remove_member_path @project.id %>';
@@ -66,28 +70,28 @@
       url: removeUrl.replace('<%= @project.id %>', id),
       type: 'POST',
       data: '_method=DELETE',
-      dataType: 'js',
+      dataType: 'text',
       complete: function(xhr) {
-        $('#roles-' + memberId).html(xhr.responseText);
+        eval(xhr.responseText);
         $.finished('Record Deleted');
       }
     });
   }
 
-  $('[id$="_submit"]').click(function() {
+  function updateMember(memberId)
+  {
     $.loading('Updating member');
-    memberId = $(this).attr('id').replace(/\D/g, '');
-
+    
     $.ajax({
       url: updateUrl.replace('<%= @project.id %>', memberId),
       type: 'post',
       data: $('#form-' + memberId).serialize() + '&_method=put',
       dataType: 'text',
       complete: function(xhr) {
-        $('#roles-' + memberId).html(xhr.responseText);
-        $.finished('Member updated.')
+				eval(xhr.responseText);
+        $.finished('Member updated')
       }
-    })
-  })
+    });
+  }
 
 </script>
