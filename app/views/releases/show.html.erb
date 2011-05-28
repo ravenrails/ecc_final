@@ -1,54 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @release.name %> &nbsp;
-  <%= link_to 'Add A Story', new_release_story_path(@release) %> |
-  <%= link_to 'Edit', edit_release_path(@release) %> |
-  <%= link_to 'Back', releases_path %>
-</p>
+<div class="field">
+  <%= label_tag 'Name:'%>
+  <%= @release.name %>
+</div>
 
-<p>
-  <b>Release date:</b>
+<div class="field">
+  <%= label_tag 'Release date:' %>
   <%= @release.release_date %>
-</p>
-
+</div>
 <br />
 
+<div id="story-list">
+  <%= render :partial => 'stories/list' %>
+</div>
+<br/>
 
-<table>
-  <tr>
-    <th colspan='6'><h3>Stories</h3></th>
-  </tr>
+<%= link_to 'Create Story', new_release_story_path(@release), 
+        :class => 'button' %>
 
-  <tr>
-    <th>Title</th>
-    <th>Creator</th>
-    <th>Priority</th>
-    <th>Status</th>
-    <th colspan="2">Actions</th>
-  </tr>
-
-
-<p>
-
-  <% if @release.stories.first %>
-    <% @release.stories.each do |story| %>
-      <tr>
-        <td><%= link_to story.name, release_story_path(@release, story) %></td>
-        <td><%= story.creator %></td>
-        <td><%= story.priority%></td>
-        <td><%= story.state%></td>
-        <td><%= link_to 'Edit', edit_release_story_path(@release, story) %></td>
-        <td><%= link_to 'Destroy', :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  <% end %>
-</p>
-
-</table>
-
-<p>
-  <%= link_to 'Add A Story', new_release_story_path(@release) %>
-</p>
-
+<script>
+  function deleteStory(urlPath)
+  {
+    $.loading('Destroying Story');
+     $.ajax({
+      url: urlPath,
+      type: 'POST',
+      data: '_method=DELETE',
+      dataType: 'text',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $.finished('Story Destroyed');
+      }
+    });
+  }
+</script>

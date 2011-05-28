@@ -1,5 +1,5 @@
 class ReleasesController < ApplicationController
-  before_filter :set_project
+  before_filter :set_project, :except => 'show'
 
   def show
     @release = Release.find(params[:id])

@@ -11,26 +11,26 @@
   <% end %>
 
   <div class="field">
-    <%= f.label 'Title' %><br />
+    <%= label_tag 'Release' %>
+    <%= @release.name %>
+  </div>
+  <div class="field">
+    <%= f.label 'Title' %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label :description, :style => 'vertical-align:top;' %>
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :priority %><br />
-    <%= f.select :priority, [['High', 'High'],['Normal', 'Normal'],['Low', 'Low']] %>
- </div>
-  <p>default state = New</p>
+    <%= f.label :priority %>
+    <%= f.select :priority, %W{ High Normal Low } %>
+    <%= f.hidden_field :creator_id %>
+  </div>
   <div class="actions">
     <%= f.submit %>
-  </div>>
-
-  <%= @release.name %>
-
-
-
-
+    <%= link_to 'Cancel', release_path(@release),
+          :class => 'button' %>
+  </div>  
 <% end %>
 

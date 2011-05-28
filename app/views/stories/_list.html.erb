@@ -1,0 +1,21 @@
+<h3>Stories</h3>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Creator</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th colspan="2">Actions</th>
+  </tr>
+<% @release.stories.each do |story| %>
+  <tr>
+    <td><%= link_to story.name, release_story_path(story.release, story) %></td>
+    <td><%= story.creator %></td>
+    <td><%= story.priority %></td>
+    <td><%= story.state %></td>
+    <td><%= link_to 'Edit', edit_release_story_path(@release, story) %></td>
+    <td><%= link_to 'Destroy', 
+            delete('#', 'Delete Story', "deleteStory('#{release_story_path(story.release, story)}')") %></td>
+  </tr>
+<% end %>
+</table>

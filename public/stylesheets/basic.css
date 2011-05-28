@@ -981,6 +981,7 @@ a.button {
 /* Form */
 .field label, .field_with_errors {
   display: inline-block;
+  font-weight: bold;
   min-width: 150px;
 }
 .field input {

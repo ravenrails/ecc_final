@@ -1,9 +1,5 @@
 class StoriesController < ApplicationController
-  before_filter :initialfind
-
-  def initialfind
-    @release = Release.find params[:release_id]
-  end
+  before_filter :setRelease
 
   def index
     @stories = @release.stories.all
@@ -14,20 +10,17 @@ class StoriesController < ApplicationController
  end
 
   def create
-   @story = @release.stories.build params[:story]
+   @story = @release.stories.new params[:story]
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to(release_path(@release), :notice => 'Story was successfully created.') }
-        format.xml  { render :xml => @story, :status => :created, :location => @story }
+        flash[:notice] = 'Story was successfully created.'
+        format.html { redirect_to release_path(@release) }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
       end
     end
   end
-
-
 
   def edit
      @story = @release.stories.find(params[:id])
@@ -39,17 +32,32 @@ class StoriesController < ApplicationController
   end
 
   def update
-     @story = Story.find(params[:id])
+     @story = @release.stories.find(params[:id])
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
-        format.html { redirect_to(release_story_path, :notice => 'Story was successfully updated.') }
-        format.xml  { head :ok }
+        flash[:notice] = 'Story was successfully updated.'
+        format.html { redirect_to release_story_path(@release, @story) }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
       end
     end
+  end  
+  
+  def destroy
+    story = Story.find(params[:id])
+    story.destroy
+    
+    respond_to do |format|
+      @stories = @release.stories
+      format.js   { render 'list' }
+    end
   end
+  
+  private
+    
+    def setRelease
+      @release = Release.find params[:release_id]
+    end
 end
 
