@@ -1,17 +1,25 @@
 Bard::Application.routes.draw do
 
+  devise_for :admins#,    :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+
+  devise_scope :admin do
+    match 'admin/login' => 'devise/sessions#new'
+    match 'admin/logout' => 'devise/sessions#destroy'
+  end
+
   root :to => 'projects#index'
 
   devise_for :users
 
   namespace "admin" do
     resources :users
-
+    resources :project_members
     resources :projects do
       post 'add_member'
       put 'update_member'
-      delete 'remove_member'
+      put 'remove_member'
     end
+    root :to => 'users#index'
   end
 
   resources :projects do
@@ -29,20 +37,6 @@ Bard::Application.routes.draw do
     resources :comments
     resources :tags
   end
-
-  resources :comments
-  resources :tags
-
-
-
-
-
-
-  # also Ensure you have flash messages in app/views/layouts/application.html.erb.
-  #   For example:
-
-   #    <p class="notice"><%= notice %></p>
-   #    <p class="alert"><%= alert %></p
 
 end
 

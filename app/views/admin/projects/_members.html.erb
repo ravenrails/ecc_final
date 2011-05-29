@@ -8,25 +8,25 @@
       </tr>
     </thead>
     <tbody>
-    <% @members.each do |member| %>
+    <% @project.all_members.each do |member| %>
       <tr class="member" id="row-<%= member.id %>">
         <td class="user"><a href="<%= admin_user_path( member.id ) %>"><%= member.user.fullname %></a></td>
         <td class="roles">
-          <span id="roles-<%= member.id %>"><%= member.role_id %></span><br/>
+          <span id="roles-span"><%= member.all_roles_name %></span><br/>
 
           <%= form_tag 'add/member', :id => %Q[form-#{member.id}], :style => 'display:none;' do %>
             <% @roles.each do |role| %>
               <%= check_box_tag 'role[]', role.name, (not member.role_id.scan(role.name).empty?) %>
               <%= role.name %><br/>
             <% end %>
-            <a id="<%= member.id %>_submit" onclick="updateMember(<%= member.id %>)">Change</a>
+            <a id="<%= member.id %>_submit" onclick="updateMember(<%= member.id %>)">Save</a>
             <a class="button" onclick="hide(<%= member.id %>)">Cancel</a>
           <% end %>
 
         </td>
         <td class="buttons">
             <a href="#" onclick="show(<%= member.id %>)" class="icon icon-edit">Edit</a>
-            <a title="Delete" href="<%= delete(admin_project_remove_member_path(member.id), 'Remove Member', "removeMember(#{member.id})") %>" class="icon icon-del">Delete</a>
+            <a title="Remove" href="<%= delete(admin_project_remove_member_path(member.id), 'Remove Member', "removeMember(#{member.id})") %>" class="icon icon-del">Remove</a>
         </td>
       </tr>
     <% end %>
@@ -45,7 +45,7 @@
   <fieldset>
     <legend>Roles</legend>
     <% @roles.each do |role| %>
-      <%= check_box_tag 'role[]', role.name %>
+      <%= check_box_tag 'role[]', role.id %>
       <%= role.name %><br/>
     <% end %>
   </fieldset>

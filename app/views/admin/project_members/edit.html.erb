@@ -1,0 +1,15 @@
+<%= render 'navigation' %>
+
+<h2>Editing Project Member</h2>
+
+<%= form_for(@user, :url => admin_project_member_path(@user)) do |form| %>
+
+  <%= render :partial => 'error', :locals => { :user => @user } if @user.errors.any? %>
+  <%= render :partial => 'form', :locals => { :f => form, :user => @user } %>
+
+  <div class="actions">
+    <%= form.submit 'Save' %>
+    <%= link_to 'Cancel', admin_project_members_path, :class => 'button' %>
+  </div>
+<% end %>
+

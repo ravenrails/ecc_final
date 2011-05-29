@@ -1,0 +1,23 @@
+<%= render 'navigation' %>
+
+<h1>Show user</h1>
+
+  <div class="field">
+    <%= label_tag 'Firstname' %>
+    <%= @user.firstname %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Lastname' %>
+    <%= @user.lastname %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Email' %>
+    <%= @user.email %>
+  </div>
+
+  <div class="actions">
+    <%= link_to 'Edit', edit_admin_project_member_path(@user), :class => 'button' %>
+    <%= link_to 'Back', admin_project_members_path, :class => 'button' %>
+  </div>

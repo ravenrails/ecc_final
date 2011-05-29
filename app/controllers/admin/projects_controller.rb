@@ -1,5 +1,7 @@
 class Admin::ProjectsController < ApplicationController
 
+  before_filter :authenticate_admin!
+  
   def index
     @projects = Project.all
   end
@@ -51,11 +53,13 @@ class Admin::ProjectsController < ApplicationController
 
   def add_member
     params[:member].each do |member|
-      ProjectMember.create(
-        :project_id => params[:project_id],
-        :user_id => member,
-        :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s }
-      )
+      params[:role].each do |role|
+        ProjectMember.create(
+          :project_id => params[:project_id],
+          :user_id => member,
+          :role_id => role
+        )
+      end
     end
 
     # batch 1
@@ -92,7 +96,7 @@ class Admin::ProjectsController < ApplicationController
   end
 
   def remove_member
-    member = ProjectMember.find(params[:project_id])
+    member = ProjectMember.find(params[:id])
     member.destroy
 
     # batch 1

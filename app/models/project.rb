@@ -13,6 +13,29 @@ class Project < ActiveRecord::Base
 
   # Story with no release is in Backlogs list - create controller for this
   
+  
+  def all_members 
+    members = []
+    
+    project_members.owner.each { |u| members[u.user_id] = u }    
+    project_members.manager.each do |u|
+      if members[u.user_id].nil?
+        members[u.user_id] = u
+      else
+        members[u.user_id].role_id += ', ' + u.role_id
+      end
+    end
+    
+    project_members.member.each do |u|
+      if members[u.user_id].nil?
+        members[u.user_id] = u
+      else
+        members[u.user_id].role_id.to_s += ', ' + u.role_id
+      end
+    end
+    
+    members.compact
+  end
 
   def members
     self.users

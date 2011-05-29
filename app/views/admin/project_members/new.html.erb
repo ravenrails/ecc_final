@@ -1,0 +1,30 @@
+<%= render 'navigation' %>
+<h2>New Project Member</h2>
+
+<%= form_for(@user, :url => admin_project_members_path) do |form| %>
+
+  <%= render :partial => 'error', :locals => { :user => @user } if @user.errors.any? %>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation, 'Confirm Password' %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <%= render :partial => 'form', :locals => { :f => form, :user => @user } %>
+
+  <div class="actions">
+    <%= form.submit 'Create' %>
+    <%= link_to 'Back', admin_project_members_path, :class => 'button' %>
+  </div>
+<% end %>
+

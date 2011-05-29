@@ -1,7 +1,5 @@
 <%= render 'navigation' %>
 
-<h1>User Listing</h1>
-
 <table>
   <tr>
     <th>ID</th>
@@ -9,13 +7,13 @@
     <th colspan="2">Actions</th>
   </tr>
 
-<% @users.each do |user| %>
-  <tr id="row-<%= user.id %>">
-    <td><%= user.id %></td>
-    <td><%= link_to user.fullname, admin_user_path(user) %></td>
-    <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
+<% @admins.each do |admin| %>
+  <tr id="row-<%= admin.id %>">
+    <td><%= admin.id %></td>
+    <td><%= link_to admin.fullname, admin_user_path(admin) %></td>
+    <td><%= link_to 'Edit', edit_admin_user_path(admin) %></td>
     <td><%= link_to 'Destroy',
-            delete(admin_user_path(user.id), 'Delete User') %></td>
+            delete(admin_user_path(admin.id), 'Delete User') %></td>
   </tr>
 <% end %>
 </table>

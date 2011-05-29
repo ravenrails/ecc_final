@@ -1,14 +1,16 @@
 <%= render 'navigation' %>
-<h1>Editing Project</h1>
+
+<h2>Edit Project</h2>
 
 <div class="tabs">
   <ul>
-    <li><a class="" href="#info" id="tab-info">Information</a></li>
-    <li><a class="selected" href="#members" id="tab-members">Members</a></li>
+    <li><%= link_to 'Information', '#info', :class => "selected",
+              :id => "tab-info" %></li>
+    <li><%= link_to 'Members', '#members', :id => "tab-members" %></li>
   </ul>
 </div>
 
-<div class="tab-div" id="info" style="display:none;">
+<div class="tab-div" id="info">
   <%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
     <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
 
@@ -20,7 +22,7 @@
   <% end %>
 </div>
 
-<div class="tab-div" id="members">
+<div class="tab-div" id="members" style="display:none;">
   <%= render 'members' %>
 </div>
 
@@ -33,9 +35,9 @@
     $($(this).attr('href')).fadeIn();
   });
 
-  function addMember() {
-
-    $.loading('Adding member');
+  function addMember() 
+  {
+    $.loading('Add Member');
 
       $.ajax({
           url: '<%= admin_project_add_member_path(@project) %>',
@@ -44,13 +46,10 @@
           dataType: 'text',
           complete: function(xhr) {
             eval(xhr.responseText);
-            $.finished('Member added');
+            $.finished('Member successfully added');
           }
       });
   };
-
-  updateUrl = '<%= admin_project_update_member_path @project.id %>';
-  removeUrl = '<%= admin_project_remove_member_path @project.id %>';
 
   function show(member_id)
   {
@@ -64,32 +63,32 @@
 
   function removeMember(id)
   {
-    $.loading('Removing member');
+    $.loading('Remove Member');
 
     $.ajax({
-      url: removeUrl.replace('<%= @project.id %>', id),
+      url: '<%= admin_project_remove_member_path @project.id %>',
       type: 'POST',
-      data: '_method=DELETE',
+      data: '_method=put&id=' + id,
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);
-        $.finished('Record Deleted');
+        $.finished('Member successfully removed');
       }
     });
   }
 
   function updateMember(memberId)
   {
-    $.loading('Updating member');
+    $.loading('Update Member');
     
     $.ajax({
-      url: updateUrl.replace('<%= @project.id %>', memberId),
+      url: '<%= admin_project_update_member_path @project.id %>',
       type: 'post',
-      data: $('#form-' + memberId).serialize() + '&_method=put',
+      data: $('#form-' + memberId).serialize() + '&id=' + id + '&_method=put',
       dataType: 'text',
       complete: function(xhr) {
 				eval(xhr.responseText);
-        $.finished('Member updated')
+        $.finished('Member successfully updated')
       }
     });
   }

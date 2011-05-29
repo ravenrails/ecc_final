@@ -15,22 +15,8 @@ module ApplicationHelper
   end
 
   def render_top_menu
-    html = %{<div id="top-menu">
-      <div id="account">
-        <ul>
-          <li><a href="http://demo.redmine.org/my/account" class="my-account">My account</a></li>
-          <li><a href="#{destroy_user_session_path}" class="logout">Sign out</a></li>
-        </ul>
-      </div>
-      <div id="loggedas">Logged in as <a href="http://demo.redmine.org/users/9121">animpo</a></div>
-      <ul>
-        <li><a href="http://demo.redmine.org/" class="home">Home</a></li>
-        <li><a href="http://demo.redmine.org/my/page" class="my-page">My page</a></li>
-        <li><a href="http://demo.redmine.org/projects" class="projects">Projects</a></li>
-      </ul>
-    </div>}
-
-    html.html_safe
+    return render :partial => 'admin/top_menu' if admin_signed_in?
+    return render :partial => 'layout/top_menu' if user_signed_in?      
   end
 
   def delete(url, title, callback = '')

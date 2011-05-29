@@ -1,15 +1,14 @@
 <%= render 'navigation' %>
+<h2>Edit Admin</h2>
 
-<h1>Editing User</h1>
+<%= form_for(@admin, :url => admin_user_path(@admin)) do |form| %>
 
-<%= form_for(@user, :url => admin_user_path(@user)) do |form| %>
-
-  <%= render :partial => 'error', :locals => { :user => @user } if @user.errors.any? %>
-  <%= render :partial => 'form', :locals => { :f => form, :user => @user } %>
+  <%= render :partial => 'error', :locals => { :admin => @admin } if @admin.errors.any? %>
+  <%= render :partial => 'form', :locals => { :f => form, :admin => @admin } %>
 
   <div class="actions">
     <%= form.submit 'Update' %>
-    <%= link_to 'Show', admin_user_path(@user), :class => 'button' %>
+    <%= link_to 'Show', admin_user_path(@admin), :class => 'button' %>
     <%= link_to 'Cancel', admin_users_path, :class => 'button' %>
   </div>
 <% end %>

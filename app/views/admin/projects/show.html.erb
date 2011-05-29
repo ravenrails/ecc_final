@@ -1,21 +1,21 @@
 <%= render 'navigation' %>
 
-<h1>Show Project</h1>
+<h2>Show Project</h2>
 
   <div class="field">
     <%= label_tag 'Name' %>
-    <%= label_tag @project.name %>
+    <%= @project.name %>
   </div>
 
   <div class="field">
     <%= label_tag 'Description' %>
-    <%= label_tag @project.description %>
+    <%= @project.description %>
   </div>
 
 
   <div class="field">
     <%= label_tag 'Display?' %>
-    <%= label_tag (@project.display) ? 'Yes': 'No' %>
+    <%= (@project.display) ? 'Yes': 'No' %>
   </div>
 
   <div class="actions">

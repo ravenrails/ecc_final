@@ -1,52 +1,58 @@
 class Admin::UsersController < ApplicationController
 
+  before_filter :authenticate_admin!
+
   def index
-    @users = User.all
+    @admins = Admin.all
   end
 
   def new
-    @user = User.new
+    @admin = Admin.new
   end
 
   def create
-    @user = User.new(params[:user])
+    @admin = Admin.new(params[:admin])
 
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to(admin_user_path(@user.id), :notice => 'User was successfully created.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+      if @admin.save
+        format.html { redirect_to(admin_user_path(@admin.id), :notice => 'Admin was successfully created.') }
+        format.xml  { render :xml => @admin, :status => :created, :location => @admin }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @admin.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def edit
-    @user = User.find(params[:id])
+    @admin = Admin.find(params[:id])
   end
 
   def show
-    @user = User.find(params[:id])
+    if params[:id].is_a? Numeric
+      redirect_to 'list'
+    end
+    
+    @admin = Admin.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
+    @admin = Admin.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to(users_path, :notice => 'User was successfully updated.') }
+      if @admin.update_attributes(params[:admin])
+        format.html { redirect_to(admins_path, :notice => 'Admin was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @admin.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @admin = Admin.find(params[:id])
+    @admin.destroy
 
     respond_to do |format|
       format.js do
