@@ -3,15 +3,12 @@ class CommentsController < ApplicationController
   before_filter :authenticate_user!
 
   def create
-    @release = Release.find params[:release_id]
-    @story = @release.stories.find params[:story_id]
-    @comment = @story.comments.build(   :content      => params[:content],
-                                        :comment_date => Time.now)
-    @comment.save
+    @story = Story.find params[:story_id]
+    @comments = @story.comments
+    @comments.create params[:comment]
 
     respond_to do | format |
-      format.html {redirect_to release_story_path(@release, @story)}
-      format.js
+      format.js { render 'list' }
     end
   end
 

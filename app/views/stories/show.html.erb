@@ -1,31 +1,30 @@
+<h2>Story</h2>
+
 <p id="notice"><%= notice %></p>
-
-<h1>The Story Unfolds</h1>
-
-<!- add notice for when new story is added -!>
 
 <div class="field">
   <%= label_tag 'Title' %>
-  <%= label_tag @story.name %>
+  <%= @story.name %>
 </div>
 
 <div class="field">
-  <%= label_tag 'Details' %>
-  <%= label_tag @story.description %>
+  <%= label_tag 'Description', nil, :class => 'leftFloat' %>
+  <span class="textarea"><%= @story.description %></span>
+  <div style="clear:both;"></div>
 </div>
 
 <div class="field">
   <%= label_tag 'Priority' %>
-  <%= label_tag @story.priority %>
+  <%= @story.priority %>
 </div>
 
 <div class="field">
   <%= label_tag 'Tags' %>
-  <%= label_tag @story.tags_s %>
+  <%= @story.tags_s %>
 </div>
 <div class="field">
   <%= label_tag 'Status' %>
-  <%= label_tag @story.state %>
+  <%= @story.state %>
 </div>
 
 <div class="actions">
@@ -37,7 +36,8 @@
   <div class="field">
     <%= label_tag 'Story Complexity:' %>
     <select name="c-rating" id="c-rating">
-        <%= [1, 2, 3, 4, 5].reduce('') { |x, y| x << "<option value='#{y}'>#{y}</option>" }  %>
+        <%= #[1, 2, 3, 4, 5].reduce('') { |x, y| x << "<option value='#{y}'>#{y}</option>" }  
+        %>
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -49,39 +49,65 @@
   </div>
   <em>Average Rating: <%= @story.ratings.average(:rate) %></em>
 </div>
-<script>
+
+<% javascript_tag do %>
   function submitRating()
   {
     $.loading('Submit Rating');
+    auth = 'authenticity_token=' + encodeURI($('[name="authenticity_token"]')[0].value);
+    auth += '&utf8=' + encodeURI($('[name="utf8"]')[0].value);
     
     $.ajax({
       url: '<%= story_add_rating_path @story %>',
       type: 'POST',
-      data: 'rate=' + $('#c-rating').val(),
+      data: auth + '&rate=' + $('#c-rating').val(),
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);
-        $.finished('Rating saved');
+        $.finished('Rating successfully saved');
+      },
+      error: function() {
+        $.finished('An error has occurred');
+      }
+    });
+  }
+<% end %>
+
+<div id="comment-form">
+  <h4> Comments </h4>
+  <%= form_for [@story, @comments.new] do |f| %>
+
+    <%= f.text_area :content, :rows => 6, :cols => 60 %>
+    <%= link_to "Post", 'javascript:postComment()', :class => 'button', 
+                :style => 'vertical-align:top;' %>
+
+  <% end %>
+</div>
+
+<script>
+  function postComment()
+  {
+    $.loading('Post Comment');
+    var form = $('#comment-form > form');
+
+    $.ajax({
+      url: form.attr('action'),
+      type: 'POST',
+      dataType: 'text',
+      data: form.serialize(),
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        form[0].reset();
+        $.finished('Comment successfully posted');
+      },
+      error: function() {
+        $.finished('An error has occurred');
       }
     });
   }
 </script>
 
-<h4> Comments </h4>
-
-<%= form_tag story_comments_path(@story, @comment_new) ,:method=>"Post", :remote => true do%>
-
-  <div class="field">
-    <%= label_tag :content %><br />
-    <%= text_area_tag :content %>
-  </div>
-  <div class="actions">
-    <%= submit_tag "Post" %>
-  </div>
-
-<% end %>
-
 <div id="comments">
-  <%= render "comments" %>
+  <%= render "comments/list" %>
 </div>
 

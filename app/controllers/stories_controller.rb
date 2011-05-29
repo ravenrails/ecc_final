@@ -31,8 +31,8 @@ class StoriesController < ApplicationController
   end
 
   def show
-     @story = Story.find(params[:id])
-     @comment_new = @story.comments.new
+     @story = @release.stories.find(params[:id])
+     @comments = @story.comments
   end
 
   def update
@@ -50,7 +50,7 @@ class StoriesController < ApplicationController
   end  
   
   def destroy
-    story = Story.find(params[:id])
+    story = @release.stories.find(params[:id])
     story.destroy
     
     respond_to do |format|
@@ -74,6 +74,15 @@ class StoriesController < ApplicationController
     
     def set_release
       @release = Release.find params[:release_id]
+      redirect_to(projects_path) unless authorize_for_story_crud? @release
+    end
+    
+    def authorize_for_story_crud?(release)
+      project_owner = Role.where(:name => 'Project Owner').first
+      project_manager = Role.where(:name => 'Project Manager').first
+  
+      ProjectMember.where('project_id = ? AND user_id = ? AND (role_id = ? OR role_id = ?)', 
+         release.project.id, current_user.id, project_owner.id, project_manager.id).count > 0
     end
     
     def save_tags(story)
