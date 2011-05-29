@@ -15,22 +15,16 @@ class Admin::ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to( admin_project_path( @project ), :notice => 'Project was successfully created.') }
-        format.xml  { render :xml => @project, :status => :created, :location => @project }
+        format.html { redirect_to( admin_project_path( @project ), 
+                      :notice => 'Project was successfully created.') }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def edit
-    # batch 1
-    @project = Project.find(params[:id])
-    @members = @project.project_members
-    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
-    @users = User.where("id NOT IN(#{member_ids})")
-    @roles = Role.all
+    set_member_vars(params[:id])
   end
 
   def show
@@ -42,11 +36,10 @@ class Admin::ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to( admin_project_path( @project ), :notice => 'Project was successfully updated.') }
-        format.xml  { head :ok }
+        format.html { redirect_to( admin_project_path( @project ), 
+                      :notice => 'Project was successfully updated.') }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -62,12 +55,7 @@ class Admin::ProjectsController < ApplicationController
       end
     end
 
-    # batch 1
-    @project = Project.find(params[:project_id])
-    @members = @project.project_members
-    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
-    @users = User.where("id NOT IN(#{member_ids})")
-    @roles = Role.all
+    set_member_vars(params[:project_id])
 
     respond_to do |format|
       format.js do
@@ -77,40 +65,36 @@ class Admin::ProjectsController < ApplicationController
   end
 
   def update_member
-    member = ProjectMember.find(params[:project_id])
-    member.update_attributes( :role_id => params[:role].reduce('') { |x, s| x << (x.empty? ? '': ', ') << s } )
+    ProjectMember.where(:project_id => params[:project_id], 
+                        :user_id => params[:id]).destroy_all
+    
+    params[:role].each do |role|
+      ProjectMember.create(
+        :project_id => params[:project_id],
+        :user_id => params[:id],
+        :role_id => role
+      )
+    end
 
-	# batch 1
-    @project = member.project
-    @members = @project.project_members
-    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
-    @users = User.where("id NOT IN(#{member_ids})")
-    @roles = Role.all
+    set_member_vars(params[:project_id])
 
     respond_to do |format|
       format.js do
         render 'members'
       end
-      format.xml  { head :ok }
     end
   end
 
   def remove_member
-    member = ProjectMember.find(params[:id])
-    member.destroy
+    ProjectMember.where(:project_id => params[:project_id], 
+                        :user_id => params[:id]).destroy_all
 
-    # batch 1
-    @project = member.project
-    @members = @project.project_members
-    member_ids = @members.reduce('') { |x, y| x << (x.empty? ? '': ', ') << y.user_id.to_s }
-    @users = User.where("id NOT IN(#{member_ids})")
-    @roles = Role.all
+    set_member_vars(params[:project_id])
 
     respond_to do |format|
       format.js do
         render 'members'
       end
-      format.xml  { head :ok }
     end
   end
 
@@ -122,7 +106,21 @@ class Admin::ProjectsController < ApplicationController
       format.js do
         render :text => params[:id]
       end
-      format.xml  { head :ok }
     end
   end
+  
+  private
+    
+    def set_member_vars(project_id)      
+      @project = Project.find(project_id)
+      @members = @project.project_members
+      
+      member_ids = @members.reduce('') do |x, y| 
+        x << (x.empty? ? '': ', ') << y.user_id.to_s 
+      end
+      
+      @users = User.where("id NOT IN(#{member_ids})")
+      @roles = Role.all
+    end
+    
 end

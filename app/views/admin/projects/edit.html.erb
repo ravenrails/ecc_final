@@ -10,7 +10,7 @@
   </ul>
 </div>
 
-<div class="tab-div" id="info">
+<div class="tab-div" id="info" style="display:none;">
   <%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
     <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
 
@@ -22,7 +22,7 @@
   <% end %>
 </div>
 
-<div class="tab-div" id="members" style="display:none;">
+<div class="tab-div" id="members">
   <%= render 'members' %>
 </div>
 
@@ -47,6 +47,9 @@
           complete: function(xhr) {
             eval(xhr.responseText);
             $.finished('Member successfully added');
+          },
+          error: function(){
+            $.finished('An error has occurred')
           }
       });
   };
@@ -64,31 +67,38 @@
   function removeMember(id)
   {
     $.loading('Remove Member');
-
+    auth = 'authenticity_token=' + $('[name="authenticity_token"]')[0].value;
+    
     $.ajax({
       url: '<%= admin_project_remove_member_path @project.id %>',
-      type: 'POST',
-      data: '_method=put&id=' + id,
+      type: 'post',
+      data: auth + '&_method=delete&id=' + id,
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);
         $.finished('Member successfully removed');
+      },
+      error: function(){
+        $.finished('An error has occurred')
       }
     });
   }
 
-  function updateMember(memberId)
+  function updateMember(id)
   {
     $.loading('Update Member');
     
     $.ajax({
       url: '<%= admin_project_update_member_path @project.id %>',
       type: 'post',
-      data: $('#form-' + memberId).serialize() + '&id=' + id + '&_method=put',
+      data: $('#form-' + id).serialize() + '&id=' + id + '&_method=put',
       dataType: 'text',
       complete: function(xhr) {
 				eval(xhr.responseText);
         $.finished('Member successfully updated')
+      },
+      error: function(){
+        $.finished('An error has occurred')
       }
     });
   }

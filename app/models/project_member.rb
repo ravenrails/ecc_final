@@ -15,24 +15,14 @@ class ProjectMember < ActiveRecord::Base
   scope :manager , lambda { where( :role_id => P_MNGR.id) }
   scope :member  , lambda { where( :role_id => MEMBER.id) }
   ###########################################################
-  
-  
-  def all_roles_name
-    role_name = ''
-    
-    role_id.split(',').each do |id|
-      role_name << ' ' << Role.find(id).name
-    end
-    
-    role_name.strip.gsub ' ', ', '
-  end
-  
-  def role_names
-    ids = self.role_id.split '-'
-    name = ''
 
-    ids.each do |id|
-      name << (name.empty? ? '' : ', ') << Role.find(id).name
+  def role_name
+    role_name = ''
+
+    role_id.split(',').each do |id|
+      role_name << (role_name.empty? ? '' : '|') << Role.find(id).name
     end
+
+    role_name.strip.gsub '|', ', '
   end
 end

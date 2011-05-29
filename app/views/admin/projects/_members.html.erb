@@ -9,24 +9,31 @@
     </thead>
     <tbody>
     <% @project.all_members.each do |member| %>
-      <tr class="member" id="row-<%= member.id %>">
-        <td class="user"><a href="<%= admin_user_path( member.id ) %>"><%= member.user.fullname %></a></td>
+      <tr class="member" id="row-<%= member.user_id %>">
+        <td class="user">
+          <a href="<%= admin_user_path( member.user_id ) %>">
+            <%= member.user.fullname %>
+          </a>
+        </td>
         <td class="roles">
-          <span id="roles-span"><%= member.all_roles_name %></span><br/>
+          <span id="roles-span"><%= member.role_name %></span><br/>
 
-          <%= form_tag 'add/member', :id => %Q[form-#{member.id}], :style => 'display:none;' do %>
+          <%= form_tag 'add/member', :id => %Q[form-#{member.user_id}], 
+                                     :style => 'display:none;' do %>
             <% @roles.each do |role| %>
-              <%= check_box_tag 'role[]', role.name, (not member.role_id.scan(role.name).empty?) %>
-              <%= role.name %><br/>
+              <%= check_box_tag 'role[]', role.id, 
+                            (not member.role_id.scan(role.id.to_s).empty?) %>
+              <%= role.name %>
+              <br/>
             <% end %>
-            <a id="<%= member.id %>_submit" onclick="updateMember(<%= member.id %>)">Save</a>
-            <a class="button" onclick="hide(<%= member.id %>)">Cancel</a>
+            <a id="<%= member.id %>_submit" onclick="updateMember(<%= member.user_id %>)">Save</a>
+            <a class="button" onclick="hide(<%= member.user_id %>)">Cancel</a>
           <% end %>
 
         </td>
         <td class="buttons">
-            <a href="#" onclick="show(<%= member.id %>)" class="icon icon-edit">Edit</a>
-            <a title="Remove" href="<%= delete(admin_project_remove_member_path(member.id), 'Remove Member', "removeMember(#{member.id})") %>" class="icon icon-del">Remove</a>
+            <a href="#" onclick="show(<%= member.user_id %>)" class="icon icon-edit">Edit</a>
+            <a title="Remove" href="<%= delete('#remove', 'Remove Member', "removeMember(#{member.user_id})") %>" class="icon icon-del">Remove</a>
         </td>
       </tr>
     <% end %>
