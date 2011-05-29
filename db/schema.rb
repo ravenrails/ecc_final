@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110527073906) do
+ActiveRecord::Schema.define(:version => 20110528130542) do
 
   create_table "comments", :force => true do |t|
     t.integer  "story_id"
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(:version => 20110527073906) do
     t.datetime "updated_at"
   end
 
+  create_table "ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "story_id"
+    t.integer  "rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "releases", :force => true do |t|
     t.string   "name"
     t.date     "release_date"
@@ -72,10 +80,17 @@ ActiveRecord::Schema.define(:version => 20110527073906) do
     t.datetime "updated_at"
   end
 
-  create_table "tags", :force => true do |t|
-    t.string   "term"
-    t.integer  "count",      :default => 0, :null => false
+  create_table "tag_relations", :force => true do |t|
     t.integer  "story_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "count",      :default => 0, :null => false
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

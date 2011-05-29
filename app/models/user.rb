@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   #has_many :releases, :foreign_key => :creator_id
   #has_many :stories,  :foreign_key => :creator_id
 
+  belongs_to :story, :foreign_key => :assigned_to
+
   def fullname
     self.firstname + ' ' + self.lastname
   end

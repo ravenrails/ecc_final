@@ -6,6 +6,7 @@ class CreateStories < ActiveRecord::Migration
       t.text      :description
       t.string    :priority
       t.string    :state, :default => 'New'
+      t.integer   :assigned_to
       t.integer   :creator_id
 
       t.timestamps

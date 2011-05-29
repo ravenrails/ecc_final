@@ -68,7 +68,7 @@
       data: form.serialize(),
       complete: function(xhr) {
         eval(xhr.responseText);
-        form.reset();
+        form[0].reset();
         $.finished('Release successfully created');
       }
     });

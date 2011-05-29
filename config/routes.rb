@@ -4,8 +4,6 @@ Bard::Application.routes.draw do
 
   devise_for :users
 
-  resources :stories
-
   namespace "admin" do
     resources :users
 
@@ -16,16 +14,18 @@ Bard::Application.routes.draw do
     end
   end
 
-
   resources :projects do
     resources :releases
   end
 
   resources :releases do
-    resources :stories
+    resources :stories do
+      put 'update_status'
+    end
   end
 
   resources :stories do
+    post 'add_rating'
     resources :comments
     resources :tags
   end

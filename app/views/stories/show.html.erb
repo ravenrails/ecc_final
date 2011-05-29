@@ -20,6 +20,10 @@
 </div>
 
 <div class="field">
+  <%= label_tag 'Tags' %>
+  <%= label_tag @story.tags_s %>
+</div>
+<div class="field">
   <%= label_tag 'Status' %>
   <%= label_tag @story.state %>
 </div>
@@ -29,8 +33,41 @@
   <%= link_to 'Back', release_path(@release), :class => 'button' %>
 </div>
 
+<div id="rating-div">
+  <div class="field">
+    <%= label_tag 'Story Complexity:' %>
+    <select name="c-rating" id="c-rating">
+        <%= [1, 2, 3, 4, 5].reduce('') { |x, y| x << "<option value='#{y}'>#{y}</option>" }  %>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </select>
+    <%= link_to 'Rate', 'javascript:void(0)', :onclick => 'submitRating()', 
+          :class => 'button' %>
+  </div>
+  <em>Average Rating: <%= @story.ratings.average(:rate) %></em>
+</div>
+<script>
+  function submitRating()
+  {
+    $.loading('Submit Rating');
+    
+    $.ajax({
+      url: '<%= story_add_rating_path @story %>',
+      type: 'POST',
+      data: 'rate=' + $('#c-rating').val(),
+      dataType: 'text',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $.finished('Rating saved');
+      }
+    });
+  }
+</script>
 
-<h1> Comments </h1>
+<h4> Comments </h4>
 
 <%= form_tag story_comments_path(@story, @comment_new) ,:method=>"Post", :remote => true do%>
 
