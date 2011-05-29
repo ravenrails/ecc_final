@@ -1,4 +1,6 @@
 class StoriesController < ApplicationController
+
+  before_filter :authenticate_user!
   before_filter :set_release, :except => 'add_rating'
 
   def index

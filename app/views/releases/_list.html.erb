@@ -3,16 +3,21 @@
   <tr>
     <th>Name</th>
     <th>Release date</th>
+  <% if authorize_for_release_crud? @project %>
     <th colspan="2">Actions</th>
+  <% end %>  
   </tr>
 
 <% @releases.each do |release| %>
   <tr>
     <td><%= link_to release.name, project_release_path(@project, release) %></td>
     <td><%= release.release_date %></td>
+    
+  <% if authorize_for_release_crud? @project %>
     <td><%= link_to 'Edit', '#', :onclick => %{findRelease('#{edit_project_release_path(@project, release)}')} %></td>
     <td><%= link_to 'Destroy', 
             delete('#', 'Delete Release', "deleteRelease('#{project_release_path(@project, release)}')") %></td>
+  <% end %>
   </tr>
 <% end %>
 </table>

@@ -16,22 +16,24 @@
 </div>
 <br/>
 
-<%= link_to 'Create Story', new_release_story_path(@release), 
+<% if authorize_for_story_crud? @release %>
+  <%= link_to 'Create Story', new_release_story_path(@release), 
         :class => 'button' %>
 
-<script>
-  function deleteStory(urlPath)
-  {
-    $.loading('Destroying Story');
-     $.ajax({
-      url: urlPath,
-      type: 'POST',
-      data: '_method=DELETE',
-      dataType: 'text',
-      complete: function(xhr) {
-        eval(xhr.responseText);
-        $.finished('Story Destroyed');
-      }
-    });
-  }
-</script>
+  <%= javascript_tag do %>
+    function deleteStory(urlPath)
+    {
+      $.loading('Destroy Story');
+       $.ajax({
+        url: urlPath,
+        type: 'POST',
+        data: '_method=DELETE',
+        dataType: 'text',
+        complete: function(xhr) {
+          eval(xhr.responseText);
+          $.finished('Story successfully destroyed');
+        }
+      });
+    }
+  <% end %>
+<% end %>

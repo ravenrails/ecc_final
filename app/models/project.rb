@@ -1,8 +1,10 @@
 class Project < ActiveRecord::Base
+  
+  #####################################################################
+  # Associations:
   has_many :project_members
-  has_many :tags
   has_many :users, :through => :project_members
-
+  has_many :tags
   has_many :releases
   #belongs_to :creator, :class_name => "User"
 
@@ -30,7 +32,7 @@ class Project < ActiveRecord::Base
       if members[u.user_id].nil?
         members[u.user_id] = u
       else
-        members[u.user_id].role_id.to_s += ', ' + u.role_id
+        members[u.user_id].role_id.to_s << ', ' << u.role_id
       end
     end
     

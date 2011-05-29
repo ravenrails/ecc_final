@@ -1,10 +1,11 @@
 <%= render 'navigation' %>
 
-<h1>User Listing</h1>
+<h2>Project Members</h2>
 
 <table>
   <tr>
     <th>ID</th>
+    <th>Username</th>
     <th>Name</th>
     <th colspan="2">Actions</th>
   </tr>
@@ -12,6 +13,7 @@
 <% @users.each do |user| %>
   <tr id="row-<%= user.id %>">
     <td><%= user.id %></td>
+    <td><%= user.username %></td>
     <td><%= link_to user.fullname, admin_project_member_path(user) %></td>
     <td><%= link_to 'Edit', edit_admin_project_member_path(user) %></td>
     <td><%= link_to 'Destroy',

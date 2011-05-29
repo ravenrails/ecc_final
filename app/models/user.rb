@@ -4,11 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #####################################################################
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :password, :password_confirmation, :remember_me,
-    :firstname, :lastname, :bday
+  attr_accessible :username, :email, :password, :password_confirmation, 
+                  :remember_me, :firstname, :lastname, :bday
 
-  # associations:
+  #####################################################################
+  # Associations:
   has_many :project_members
   has_many :projects, :through => :project_members
   has_many :roles, :through => :project_members
@@ -22,8 +24,12 @@ class User < ActiveRecord::Base
     self.firstname + ' ' + self.lastname
   end
 
-  def is_admin?
-    self.is_admin
+  def all_projects
+    c = []    
+    self.projects.each do |p|
+      c[p.id] = p if c[p.id].nil?
+    end    
+    c.compact
   end
 
   def role_names

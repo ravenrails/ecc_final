@@ -1,0 +1,42 @@
+<h2>My Account</h2>
+
+<%= form_for(@user, :url => update_account_home_path(@user)) do |f| %>
+  <% unless @user.errors.empty? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="field">
+    <%= label_tag :username %>
+    <%= :username %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :firstname %>
+    <%= f.text_field :firstname %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+    
+  <div class="actions">
+    <%= f.submit 'Save' %>
+    <input type="reset" name="reset" value="Reset" />
+  </div>
+  
+<% end %>
+

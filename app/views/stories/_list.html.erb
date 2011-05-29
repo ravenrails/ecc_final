@@ -5,7 +5,9 @@
     <th>Creator</th>
     <th>Priority</th>
     <th>Status</th>
+  <% if authorize_for_story_crud? @release %>
     <th colspan="2">Actions</th>
+  <% end %>
   </tr>
 <% @release.stories.each do |story| %>
   <tr>
@@ -13,9 +15,13 @@
     <td><%= story.creator %></td>
     <td><%= story.priority %></td>
     <td><%= story.state %></td>
+    
+  <% if authorize_for_story_crud? @release %>
     <td><%= link_to 'Edit', edit_release_story_path(@release, story) %></td>
     <td><%= link_to 'Destroy', 
             delete('#', 'Delete Story', "deleteStory('#{release_story_path(story.release, story)}')") %></td>
+  <% end %>
+            
   </tr>
 <% end %>
 </table>

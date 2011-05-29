@@ -1,8 +1,17 @@
 Bard::Application.routes.draw do
+ 
+  root :to => 'home#my_account'
 
-  root :to => 'projects#index'
-
-  devise_for :users
+  devise_for :users  
+    
+  resource :home, :only => [ :index ] do
+      member do
+        get "index"
+        get "my_account"
+        get "change_password"
+        put "update_account"
+      end
+  end
   
   resources :projects do
     resources :releases
@@ -32,14 +41,13 @@ Bard::Application.routes.draw do
   end
 
   namespace "admin" do
-    resources :users
-    resources :project_members
+    root :to => 'users#index'
+    resources :users, :project_members
     resources :projects do
       post   'add_member'
       put    'update_member'
       delete 'remove_member'
     end
-    root :to => 'users#index'
   end
 
 end

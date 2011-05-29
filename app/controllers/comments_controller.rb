@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def create
     @release = Release.find params[:release_id]
     @story = @release.stories.find params[:story_id]
