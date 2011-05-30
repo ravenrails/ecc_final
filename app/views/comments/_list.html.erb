@@ -1,6 +1,7 @@
 
 <% @comments.each do |comment| %>
-  <div>
+  <div class="comment">
+    <%= comment.creator.fullname %>: &nbsp;
     <%= comment.content %>
   </div>
 <% end %>
