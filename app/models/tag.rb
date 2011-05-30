@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
   has_many :stories, :through => :tag_relations
   belongs_to :project
   belongs_to :creator, :class_name => "User"
+  validates_length_of :name, :maximum => 60
 
 
   def frequency
@@ -14,26 +15,26 @@ class Tag < ActiveRecord::Base
   end
 
   class << self
-    
+
     def save_tag(tags, project_id)
       compilation = []
-      
-      tags.uniq.each do |tag|        
+
+      tags.uniq.each do |tag|
         tag.strip!
         existing_tag = Tag.where(:name => tag, :project_id => project_id)
-        
+
         if existing_tag.empty?
-          existing_tag = Tag.create(:name => tag, :project_id => project_id)          
+          existing_tag = Tag.create(:name => tag, :project_id => project_id)
         else
           existing_tag = existing_tag[0]
         end
-        
+
         compilation << existing_tag
       end
-      
+
       compilation
     end
-    
+
   end
 end
 

@@ -1,7 +1,7 @@
 <%= render 'navigation' %>
 
 <h2>Project Members</h2>
-
+<% unless @users.empty? %>
 <table>
   <tr>
     <th>ID</th>
@@ -10,16 +10,20 @@
     <th colspan="2">Actions</th>
   </tr>
 
-<% @users.each do |user| %>
-  <tr id="row-<%= user.id %>">
-    <td><%= user.id %></td>
-    <td><%= user.username %></td>
-    <td><%= link_to user.fullname, admin_project_member_path(user) %></td>
-    <td><%= link_to 'Edit', edit_admin_project_member_path(user) %></td>
-    <td><%= link_to 'Destroy',
-            delete(admin_project_member_path(user.id), 'Delete User') %></td>
-  </tr>
+  <% @users.each do |user| %>
+    <tr id="row-<%= user.id %>">
+      <td><%= user.id %></td>
+      <td><%= user.username %></td>
+      <td><%= user.fullname %></td>
+      <td><%= link_to 'Edit', edit_admin_project_member_path(user) %></td>
+      <td><%= link_to 'Destroy',
+              delete(admin_project_member_path(user.id), 'Delete User') %></td>
+    </tr>
+  <% end %>
 <% end %>
+
+
+
 </table>
 
 <br />

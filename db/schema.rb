@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20110529022516) do
   create_table "comments", :force => true do |t|
     t.integer  "story_id"
     t.text     "content"
-    t.datetime "comment_date"
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -112,7 +111,6 @@ ActiveRecord::Schema.define(:version => 20110529022516) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.integer  "count",      :default => 0, :null => false
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"

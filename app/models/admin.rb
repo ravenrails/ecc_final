@@ -5,11 +5,14 @@ class Admin < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :password, :password_confirmation, 
+  attr_accessible :username, :email, :password, :password_confirmation,
     :remember_me, :firstname, :lastname, :bday
-    
-    
+
+
   def fullname
+    return 'blank username' if self.username.nil?
+    return self.username if self.lastname.nil?
     self.firstname + ' ' + self.lastname
   end
 end
+
