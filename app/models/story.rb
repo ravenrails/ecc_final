@@ -6,7 +6,7 @@ class Story < ActiveRecord::Base
   has_many    :ratings
   belongs_to  :creator, :class_name => "User"
 
-  has_one :user
+  belongs_to :user
 
   validates_length_of :name, :maximum => 140
   #validate priority here
