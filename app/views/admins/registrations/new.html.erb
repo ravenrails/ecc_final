@@ -6,6 +6,12 @@
   <p><%= f.label :username %><br />
   <%= f.text_field :username %></p>
 
+  <p><%= f.label :firstname %><br />
+  <%= f.text_field :firstname %></p>
+
+  <p><%= f.label :lastname %><br />
+  <%= f.text_field :lastname %></p>
+
   <p><%= f.label :email %><br />
   <%= f.email_field :email %></p>
 
@@ -19,3 +25,4 @@
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
+

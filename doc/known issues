@@ -1,0 +1,12 @@
+Known issues
+
+- create user (after entering firstname/last name
+    uninitialized constant HomesController
+
+
+- no catch for duplicate sign up in admin
+
+- session signs out for admin after destroying user and then refresh
+
+- assigning members to project
+

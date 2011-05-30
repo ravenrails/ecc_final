@@ -8,6 +8,7 @@ class Story < ActiveRecord::Base
   has_one     :user
 
   validates_length_of :name, :maximum => 140
+  #validate priority here
 
   def tags_s
     str = ''
