@@ -1,6 +1,6 @@
 <h2>My Account</h2>
 
-<%= form_for(@user, :url => update_account_home_path(@user)) do |f| %>
+<%= form_for( @user, :url => update_account_home_path ) do |f| %>
   <% unless @user.errors.empty? %>
   <div id="error_explanation">
     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -15,9 +15,9 @@
 
   <div class="field">
     <%= label_tag :username %>
-    <%= :username %>
+    <%= @user.username %>
   </div>
-  
+
   <div class="field">
     <%= f.label :firstname %>
     <%= f.text_field :firstname %>
@@ -32,11 +32,15 @@
     <%= f.label :email %>
     <%= f.email_field :email %>
   </div>
-    
+
   <div class="actions">
+    <%= hidden_field_tag 'from', 'my_account' %>
     <%= f.submit 'Save' %>
-    <input type="reset" name="reset" value="Reset" />
+    <input id="reset" type="reset" name="reset" value="Reset" />
   </div>
-  
+
 <% end %>
 
+<%= javascript_tag do %>
+  $('#reset').button();
+<% end %>

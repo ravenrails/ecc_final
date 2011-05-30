@@ -1,10 +1,10 @@
 Bard::Application.routes.draw do
- 
+
   root :to => 'home#my_account'
 
-  devise_for :users  
-    
-  resource :home, :only => [ :index ] do
+  devise_for :users
+
+  resource :home, :controller => 'home', :only => [ :index ],  do
       member do
         get "index"
         get "my_account"
@@ -12,7 +12,7 @@ Bard::Application.routes.draw do
         put "update_account"
       end
   end
-  
+
   resources :projects do
     resources :releases
   end
