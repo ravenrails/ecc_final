@@ -13,7 +13,11 @@
   <%= label_tag 'Project Owner(s)', nil, :class => 'leftFloat' %>
   <span class="textarea">
   <% @proj_owners.each do |owner| %>
-    | <%= owner.user.fullname %>
+    <% if owner == @proj_owners.last %>
+      <%= owner.user.fullname %>
+    <% else %>
+      <%= owner.user.fullname+"," %>
+    <% end %>
   <% end %></span>
   <div style="clear:both;"></div>
 </div>
@@ -21,7 +25,11 @@
   <%= label_tag 'Project Manager(s)', nil, :class => 'leftFloat' %>
   <span class="textarea">
   <% @proj_managers.each do |manager| %>
-    | <%= manager.user.fullname %>
+    <% if manager == @proj_managers.last %>
+      <%= manager.user.fullname %>
+    <% else %>
+      <%= manager.user.fullname+"," %>
+    <% end %>
   <% end %></span>
   <div style="clear:both;"></div>
 </div>
@@ -29,7 +37,11 @@
   <%= label_tag 'Members(s)', nil, :class => 'leftFloat' %>
   <span class="textarea">
   <% @proj_members.each do |member| %>
-    | <%= member.user.fullname %>
+    <% if member == @proj_members.last %>
+      <%= member.user.fullname %>
+    <% else %>
+      <%= member.user.fullname+"," %>
+    <% end %>
   <% end %></span>
   <div style="clear:both;"></div>
 </div>

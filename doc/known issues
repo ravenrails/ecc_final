@@ -9,6 +9,10 @@ Known issues
 
 - clickin 'Home' in the navigation bar results in a blank screen.
 
+- going to admins sign in without signing out from project manager results in error from gsub fix
+Showing /home/exist/Rails Projects/bard/app/views/admins/sessions/new.html.erb where line #4 raised:
+undefined method `gsub' for nil:NilClass
+
 
 possible improvements:
 - add a table at Projects page for admin to list the users
