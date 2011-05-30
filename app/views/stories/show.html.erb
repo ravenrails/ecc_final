@@ -24,11 +24,13 @@
 </div>
 <div class="field">
   <%= label_tag 'Status' %>
-  <%= @story.state %>
+  <span id="status-field"><%= @story.state %></span>
 </div>
 
 <div class="actions">
-  <%= link_to 'Edit', edit_release_story_path(@release, @story), :class => 'button' %>
+  <% if authorize_for_story_crud? @release %>
+    <%= link_to 'Edit', edit_release_story_path(@release, @story), :class => 'button' %>
+  <% end %>
   <%= link_to 'Back', release_path(@release), :class => 'button' %>
 </div>
 
@@ -50,7 +52,36 @@
   <em>Average Rating: <%= @story.ratings.average(:rate) %></em>
 </div>
 
+<div id="status-form">
+  <%= form_tag '/projects', :method => :put do %>
+    <%= hidden_field_tag :status, '', :id => 'status' %>
+  <% end %>
+  <div id="status-buttons">
+    <%= render_s_buttons @story %>
+  </div>
+</div>
+
 <% javascript_tag do %>
+  function updateStatus(stat)
+  {
+    $.loading('Update Status');
+    $('#status').val(stat);
+
+    $.ajax({
+      url: '<%= release_story_update_status_path @release, @story %>',
+      type: 'POST',
+      data: $('#status-form > form').serialize(),
+      dataType: 'text',
+      complete: function(xhr) {
+        eval(xhr.responseText);
+        $.finished('Status successfully set to ' + $('#status-field').html());
+      },
+      error: function() {
+        $.finished('An error has occurred');
+      }
+    });
+  }
+
   function submitRating()
   {
     $.loading('Submit Rating');

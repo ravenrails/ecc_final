@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Title</th>
-    <th>Creator</th>
     <th>Priority</th>
     <th>Status</th>
   <% if authorize_for_story_crud? @release %>
@@ -13,7 +12,6 @@
 <% @release.stories.each do |story| %>
   <tr>
     <td><%= link_to story.name, release_story_path(story.release, story) %></td>
-    <td><%= story.creator %></td>
     <td><%= story.priority %></td>
     <td><%= story.state %></td>
 

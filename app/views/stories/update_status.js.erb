@@ -1,0 +1,3 @@
+$('#status-field').html("<%= escape_javascript(@story.state) %>");
+$('#status-buttons').html("<%= escape_javascript(render_s_buttons(@story)) %>");
+$('.button').button();

@@ -5,17 +5,30 @@ class Story < ActiveRecord::Base
   has_many    :comments
   has_many    :ratings
   belongs_to  :creator, :class_name => "User"
-  
+
   has_one :user
-  
+
   def tags_s
     str = ''
-    
+
     self.tags.each do |tag|
       str << (str.empty? ? '': ', ') << tag.name
     end
-    
+
     str
+  end
+
+  class << self
+
+    def save_status(story, status)
+      state = case status
+        when 'Reject' then 'New'
+        when 'Accept' then 'Close'
+        else status
+      end
+      story.update_attribute :state, state
+    end
+
   end
 end
 

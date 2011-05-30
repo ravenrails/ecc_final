@@ -988,11 +988,14 @@ a.button {
 .field input {
   width: 300px;
 }
+.field input[type=checkbox] {
+  width: 10px;
+}
 .actions {
   padding: 10px 150px;
 }
 
-.leftFloat { float: left; } 
+.leftFloat { float: left; }
 
 .field span.textarea {
   float: left;
