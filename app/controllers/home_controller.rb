@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  
+
   before_filter :authenticate_user!
   before_filter :set_user
 
@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
   def change_password
   end
-  
+
   def update_account
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -21,10 +21,10 @@ class HomeController < ApplicationController
       end
     end
   end
-  
+
   private
-  
-    def set_user    
+
+    def set_user
       @user = User.find(current_user.id)
     end
 end

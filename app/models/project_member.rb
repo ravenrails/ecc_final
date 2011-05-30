@@ -12,8 +12,8 @@ class ProjectMember < ActiveRecord::Base
   ###########################################################
   ## Scopes
   scope :owner   , lambda { where( :role_id => P_OWNER.id) }
-  scope :manager , lambda { where( :role_id => P_MNGR.id) }
-  scope :member  , lambda { where( :role_id => MEMBER.id) }
+  scope :manager , lambda { where( :role_id => P_MNGR.id ) }
+  scope :member  , lambda { where( :role_id => MEMBER.id ) }
   ###########################################################
 
   def role_name

@@ -21,6 +21,10 @@ class Story < ActiveRecord::Base
     str
   end
 
+  def assigned_with
+    User.find(self.assigned_to)
+  end
+
   class << self
 
     def save_status(story, status)

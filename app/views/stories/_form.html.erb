@@ -32,10 +32,15 @@
     <%= f.select :priority, %W{ High Normal Low } %>
     <%= f.hidden_field :creator_id %>
   </div>
+  <div class="field">
+    <%= f.label :assigned_to %>
+    <%= f.select :assigned_to,
+          options_from_collection_for_select(@release.project.only_members, "id", "fullname") %>
+  </div>
   <div class="actions">
     <%= f.submit %>
     <%= link_to 'Cancel', release_path(@release),
           :class => 'button' %>
-  </div>  
+  </div>
 <% end %>
 

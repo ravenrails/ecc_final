@@ -3,7 +3,7 @@ class Admin::HomeController < ApplicationController
   before_filter :authenticate_admin!
 
   def index
-    @admins = User.all
+    render :action => 'my_account'
   end
 
   def new

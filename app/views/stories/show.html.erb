@@ -23,6 +23,10 @@
   <%= @story.tags_s %>
 </div>
 <div class="field">
+  <%= label_tag 'Assigned to' %>
+  <%= @story.assigned_with.fullname %>
+</div>
+<div class="field">
   <%= label_tag 'Status' %>
   <span id="status-field"><%= @story.state %></span>
 </div>
