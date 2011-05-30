@@ -11,17 +11,17 @@
     <% @project.all_members.each do |member| %>
       <tr class="member" id="row-<%= member.user_id %>">
         <td class="user">
-          <a href="<%= admin_user_path( member.user_id ) %>">
+          <a href="<%= admin_project_member_path( member.user_id ) %>">
             <%= member.user.fullname %>
           </a>
         </td>
         <td class="roles">
           <span id="roles-span"><%= member.role_name %></span><br/>
 
-          <%= form_tag 'add/member', :id => %Q[form-#{member.user_id}], 
+          <%= form_tag 'add/member', :id => %Q[form-#{member.user_id}],
                                      :style => 'display:none;' do %>
             <% @roles.each do |role| %>
-              <%= check_box_tag 'role[]', role.id, 
+              <%= check_box_tag 'role[]', role.id,
                             (not member.role_id.scan(role.id.to_s).empty?) %>
               <%= role.name %>
               <br/>
@@ -63,3 +63,4 @@
 <script>
 	$('[id$="_submit"], .button').button();
 </script>
+

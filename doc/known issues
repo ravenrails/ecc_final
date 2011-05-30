@@ -17,7 +17,7 @@ undefined method `gsub' for nil:NilClass
 possible improvements:
 - add a table at Projects page for admin to list the users
 
-- display Project Owner and Manager name on member Project page
+
 
 
 
@@ -27,7 +27,9 @@ minor:
 
 
 
-Fixed on May 30
+Fixed / Completed on May 30
 - create user (after entering firstname/last name
     uninitialized constant HomesController
+
+- display Project Owner and Manager name on member Project page
 
