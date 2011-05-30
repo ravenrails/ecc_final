@@ -10,7 +10,7 @@
   </ul>
 </div>
 
-<div class="tab-div" id="info" style="display:none;">
+<div class="tab-div" id="info">
   <%= form_for(@project, :url => admin_project_path(@project)) do |form| %>
     <%= render :partial => 'form', :locals => { :f => form, :project => @project } %>
 
@@ -22,11 +22,11 @@
   <% end %>
 </div>
 
-<div class="tab-div" id="members">
+<div class="tab-div" id="members" style="display:none;">
   <%= render 'members' %>
 </div>
 
-<script>
+<%= javascript_tag do %>
   $('.tabs > ul > li > a').click(function() {
     $('.tabs > ul > li > a').removeClass('selected');
     $(this).addClass('selected');
@@ -35,7 +35,7 @@
     $($(this).attr('href')).fadeIn();
   });
 
-  function addMember() 
+  function addMember()
   {
     $.loading('Add Member');
 
@@ -67,8 +67,8 @@
   function removeMember(id)
   {
     $.loading('Remove Member');
-    auth = 'authenticity_token=' + $('[name="authenticity_token"]')[0].value;
-    
+    auth = 'authenticity_token=' + encodeURI($('[name="authenticity_token"]')[0].value);
+
     $.ajax({
       url: '<%= admin_project_remove_member_path @project.id %>',
       type: 'post',
@@ -87,7 +87,7 @@
   function updateMember(id)
   {
     $.loading('Update Member');
-    
+
     $.ajax({
       url: '<%= admin_project_update_member_path @project.id %>',
       type: 'post',
@@ -103,4 +103,4 @@
     });
   }
 
-</script>
+<% end %>

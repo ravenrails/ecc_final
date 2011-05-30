@@ -32,7 +32,6 @@
   <div id="edit-release-form" class="hidden">
   </div>
 
-
   <%= link_to 'New Release', 'javascript:newRelease()', :class => 'button' %>
 
   <%= javascript_tag do %>
@@ -76,7 +75,7 @@
         }
       });
     }
-    
+
     function findRelease(urlPath)
     {
       $.loading('Retrieving Release');
@@ -87,12 +86,12 @@
         dataType: 'text',
         complete: function(xhr) {
           eval(xhr.responseText);
-          $('#dloading').dialog('destroy');
+          $('#dprocessing').dialog('destroy');
           editRelease();
         }
       });
     }
-    
+
     function editRelease()
     {
       $('#edit-release-form').dialog({
@@ -115,7 +114,7 @@
         }
       });
     }
-    
+
     function updateRelease()
     {
       $.loading('Update Release');
@@ -132,7 +131,7 @@
         }
       });
     }
-    
+
     function deleteRelease(urlPath)
     {
       $.loading('Destroying Release');

@@ -1,4 +1,5 @@
-<h3>Stories</h3>
+
+<% if @release.stories.count > 0 %>
 <table>
   <tr>
     <th>Title</th>
@@ -15,13 +16,14 @@
     <td><%= story.creator %></td>
     <td><%= story.priority %></td>
     <td><%= story.state %></td>
-    
+
   <% if authorize_for_story_crud? @release %>
     <td><%= link_to 'Edit', edit_release_story_path(@release, story) %></td>
-    <td><%= link_to 'Destroy', 
+    <td><%= link_to 'Destroy',
             delete('#', 'Delete Story', "deleteStory('#{release_story_path(story.release, story)}')") %></td>
   <% end %>
-            
+
   </tr>
 <% end %>
 </table>
+<% end %>

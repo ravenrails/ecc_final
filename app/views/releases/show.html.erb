@@ -11,13 +11,10 @@
 </div>
 <br />
 
-<div id="story-list">
-  <%= render :partial => 'stories/list' %>
-</div>
-<br/>
+<h3>Stories</h3>
 
 <% if authorize_for_story_crud? @release %>
-  <%= link_to 'Create Story', new_release_story_path(@release), 
+  <%= link_to 'Create Story', new_release_story_path(@release),
         :class => 'button' %>
 
   <%= javascript_tag do %>
@@ -37,3 +34,7 @@
     }
   <% end %>
 <% end %>
+<br/>
+<div id="story-list">
+  <%= render :partial => 'stories/list' %>
+</div>

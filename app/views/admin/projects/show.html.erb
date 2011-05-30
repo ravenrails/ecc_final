@@ -8,8 +8,9 @@
   </div>
 
   <div class="field">
-    <%= label_tag 'Description' %>
-    <%= @project.description %>
+    <%= label_tag 'Description', nil, :class => 'leftFloat' %>
+    <span class="textarea"><%= @project.description %></span>
+    <div style="clear:both"></div>
   </div>
 
 
