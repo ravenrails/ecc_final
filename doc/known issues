@@ -4,6 +4,16 @@ Known issues
 
 - session signs out for admin after destroying user and then refresh
 
+- after signing into user (member) edit account is displayed
+    - add an ok button, or proceed to projects button?
+
+- clickin 'Home' in the navigation bar results in a blank screen.
+
+
+possible improvements:
+- add a table at Projects page for admin to list the users
+
+- display Project Owner and Manager name on member Project page
 
 
 

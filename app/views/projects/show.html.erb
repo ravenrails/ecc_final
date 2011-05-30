@@ -9,6 +9,31 @@
   <span class="textarea"><%= @project.description %></span>
   <div style="clear:both;"></div>
 </div>
+<div class="field">
+  <%= label_tag 'Project Owner(s)', nil, :class => 'leftFloat' %>
+  <span class="textarea">
+  <% @proj_owners.each do |owner| %>
+    | <%= owner.user.fullname %>
+  <% end %></span>
+  <div style="clear:both;"></div>
+</div>
+<div class="field">
+  <%= label_tag 'Project Manager(s)', nil, :class => 'leftFloat' %>
+  <span class="textarea">
+  <% @proj_managers.each do |manager| %>
+    | <%= manager.user.fullname %>
+  <% end %></span>
+  <div style="clear:both;"></div>
+</div>
+<div class="field">
+  <%= label_tag 'Members(s)', nil, :class => 'leftFloat' %>
+  <span class="textarea">
+  <% @proj_members.each do |member| %>
+    | <%= member.user.fullname %>
+  <% end %></span>
+  <div style="clear:both;"></div>
+</div>
+
 
 
 <%= link_to 'Back', projects_path, :class => 'button' %>
@@ -149,3 +174,4 @@
 
   <% end %>
 <% end %>
+

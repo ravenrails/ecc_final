@@ -15,11 +15,14 @@ class ProjectsController < ApplicationController
   #end
 
   def show
-    @project = current_user.projects.find(params[:id])
-    @releases = @project.releases
+    @project        = current_user.projects.find(params[:id])
+    @releases       = @project.releases
+    @proj_owners    = @project.project_members.owner
+    @proj_managers  = @project.project_members.manager
+    @proj_members   = @project.all_members
     #render :text => current_user.id
   end
-  
+
   #def create
   # @project = Project.new(params[:project])
   #
@@ -49,3 +52,4 @@ class ProjectsController < ApplicationController
   #end
 
 end
+
