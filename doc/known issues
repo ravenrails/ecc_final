@@ -1,17 +1,19 @@
 Known issues
 
-- create user (after entering firstname/last name
-    uninitialized constant HomesController
-
-
 - no catch for duplicate sign up in admin
 
 - session signs out for admin after destroying user and then refresh
 
-- assigning members to project
+
 
 
 minor:
 - change error message for not choosing anything when adding in New Project
     - in most error messages, need to provide more info
+
+
+
+Fixed on May 30
+- create user (after entering firstname/last name
+    uninitialized constant HomesController
 
