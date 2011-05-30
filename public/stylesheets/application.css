@@ -984,6 +984,7 @@ a.button {
   display: inline-block;
   font-weight: bold;
   min-width: 150px;
+  padding: 4px 0;
 }
 .field input {
   width: 300px;

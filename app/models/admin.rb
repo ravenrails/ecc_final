@@ -10,8 +10,10 @@ class Admin < ActiveRecord::Base
 
 
   def fullname
-    return 'blank username' if self.username.nil?
-    return self.username if self.lastname.nil?
+    if self.firstname.nil?
+      return 'n/a' if self.username.nil?
+      return self.username
+    end
     self.firstname + ' ' + self.lastname
   end
 end

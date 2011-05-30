@@ -23,6 +23,10 @@
   <%= @story.tags_s %>
 </div>
 <div class="field">
+  <%= label_tag 'Assigned to' %>
+  <%= @story.assigned_with.fullname %>
+</div>
+<div class="field">
   <%= label_tag 'Status' %>
   <span id="status-field"><%= @story.state %></span>
 </div>
@@ -35,27 +39,33 @@
 </div>
 
 <div id="rating-div">
-  <div class="field">
-    <%= label_tag 'Story Complexity:' %>
-    <select name="c-rating" id="c-rating">
-        <%= #[1, 2, 3, 4, 5].reduce('') { |x, y| x << "<option value='#{y}'>#{y}</option>" }
-        %>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select>
-    <%= link_to 'Rate', 'javascript:void(0)', :onclick => 'submitRating()',
-          :class => 'button' %>
+  <div class="field" id="rating-form">
+    <%= form_tag 'rating/1' do %>
+      <%= label_tag 'Story Complexity:' %>
+      <select name="rate" id="c-rating">
+          <%= #[1, 2, 3, 4, 5].reduce('') { |x, y| x << "<option value='#{y}'>#{y}</option>" }
+          %>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+      </select>
+      <%= link_to 'Rate', 'javascript:void(0)', :onclick => 'submitRating()',
+            :class => 'button' %>
+    <% end %>
   </div>
-  <em>Average Rating: <%= @story.ratings.average(:rate) %></em>
+  <div class="field">
+    <%= label_tag 'Average Rating' %>
+    <em id="actual-rating"><%= @story.ratings.average(:rate) %></em>
+  </div>
 </div>
 
 <div id="status-form">
   <%= form_tag '/projects', :method => :put do %>
     <%= hidden_field_tag :status, '', :id => 'status' %>
   <% end %>
+  <br/>
   <div id="status-buttons">
     <%= render_s_buttons @story %>
   </div>
@@ -85,13 +95,11 @@
   function submitRating()
   {
     $.loading('Submit Rating');
-    auth = 'authenticity_token=' + encodeURI($('[name="authenticity_token"]')[0].value);
-    auth += '&utf8=' + encodeURI($('[name="utf8"]')[0].value);
 
     $.ajax({
       url: '<%= story_add_rating_path @story %>',
       type: 'POST',
-      data: auth + '&rate=' + $('#c-rating').val(),
+      data: $('#rating-form > form').serialize(),
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);

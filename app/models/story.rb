@@ -6,7 +6,7 @@ class Story < ActiveRecord::Base
   has_many    :ratings
   belongs_to  :creator, :class_name => "User"
 
-  has_one :user
+  belongs_to :user
 
   validates_length_of :name, :maximum => 140
   #validate priority here
@@ -19,6 +19,10 @@ class Story < ActiveRecord::Base
     end
 
     str
+  end
+
+  def assigned_with
+    User.find(self.assigned_to)
   end
 
   class << self

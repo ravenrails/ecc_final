@@ -40,7 +40,12 @@ Bard::Application.routes.draw do
     match 'admin/logout' => 'devise/sessions#destroy'
   end
 
+
   namespace "admin" do
+    match "/my_account"      => 'home#my_account'
+    match "/change_password" => 'home#change_password'
+    match "/update_account"  => 'home#update_account', :via => :put
+
     root :to => 'users#index'
     resources :users, :project_members
     resources :projects do

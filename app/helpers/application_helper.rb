@@ -65,6 +65,10 @@ module ApplicationHelper
               :class => 'button' )
     end
 
+    unless html.empty?
+      html = '<fieldset style="width:600px;"><legend>Status Control</legend>' << html << '</fieldset>'
+    end
+
     html.html_safe
   end
 end

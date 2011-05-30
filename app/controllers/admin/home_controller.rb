@@ -1,7 +1,9 @@
 class Admin::HomeController < ApplicationController
 
+  before_filter :authenticate_admin!
+
   def index
-    @admins = User.all
+    render :action => 'my_account'
   end
 
   def new
@@ -14,10 +16,8 @@ class Admin::HomeController < ApplicationController
     respond_to do |format|
       if @admin.save
         format.html { redirect_to(admin_path(@admin.id), :notice => 'Admin user was successfully created.') }
-        format.xml  { render :xml => @admin, :status => :created, :location => @admin }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @admin.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -36,10 +36,24 @@ class Admin::HomeController < ApplicationController
     respond_to do |format|
       if @admin.update_attributes(params[:user])
         format.html { redirect_to(admins_path, :notice => 'Admin user was successfully updated.') }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @admin.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def my_account
+  end
+
+  def change_password
+  end
+
+  def update_account
+    respond_to do |format|
+      if current_admin.update_attributes(params[:admin])
+        format.html { redirect_to eval('admin_' + params[:from] + '_path') }
+      else
+        format.html { render :action => params[:from] }
       end
     end
   end

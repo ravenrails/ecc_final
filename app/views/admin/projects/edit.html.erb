@@ -67,12 +67,11 @@
   function removeMember(id)
   {
     $.loading('Remove Member');
-    auth = 'authenticity_token=' + encodeURI($('[name="authenticity_token"]')[0].value);
 
     $.ajax({
       url: '<%= admin_project_remove_member_path @project.id %>',
       type: 'post',
-      data: auth + '&_method=delete&id=' + id,
+      data: $('#dummy-form').serialize() + '&_method=delete&id=' + id,
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);
