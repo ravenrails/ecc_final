@@ -1,0 +1,21 @@
+
+<% if @stories.count > 0 %>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  <% @stories.each do |story| %>
+    <tr>
+      <td><%= link_to story.name, backlog_path(story) %></td>
+      <td><%= story.priority %></td>
+      <td><%= story.state %></td>
+      <td><%= link_to 'Edit', edit_backlog_path(story) %></td>
+      <td><%= link_to 'Destroy',
+              delete('#', 'Delete Story', "deleteStory('#{backlog_path(story)}')") %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>

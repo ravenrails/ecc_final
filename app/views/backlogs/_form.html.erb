@@ -1,0 +1,36 @@
+<%= form_for @story, :url => backlogs_path do |f| %>
+  <% if @story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story.errors.count, "error") %> prohibited this release from being saved:</h2>
+      <ul>
+      <% @story.errors.full_messages.each do |msg| %>`
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label 'Title' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description, :style => 'vertical-align:top;' %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :priority %>
+    <%= f.select :priority, %W{ High Normal Low } %>
+    <%= f.hidden_field :creator_id, :value => current_user.id %>
+  </div>
+  <div class="field">
+    <%= f.label :release %>
+    <%= f.select :release_id, render_projects_options %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+    <%= link_to 'Cancel', backlogs_path,
+          :class => 'button' %>
+  </div>
+<% end %>
+

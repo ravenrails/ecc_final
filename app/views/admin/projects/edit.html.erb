@@ -71,7 +71,7 @@
     $.ajax({
       url: '<%= admin_project_remove_member_path @project.id %>',
       type: 'post',
-      data: $('#dummy-form').serialize() + '&_method=delete&id=' + id,
+      data: $('#auth-form').serialize() + '&_method=delete&id=' + id,
       dataType: 'text',
       complete: function(xhr) {
         eval(xhr.responseText);

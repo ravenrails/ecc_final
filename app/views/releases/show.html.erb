@@ -25,7 +25,7 @@
        $.ajax({
         url: urlPath,
         type: 'POST',
-        data: '_method=DELETE',
+        data: $('#auth-form').serialize() + '&_method=DELETE',
         dataType: 'text',
         complete: function(xhr) {
           eval(xhr.responseText);

@@ -1,0 +1,29 @@
+<h2>Show Story</h2>
+
+<p id="notice"><%= notice %></p>
+
+<div class="field">
+  <%= label_tag 'Title' %>
+  <%= @story.name %>
+</div>
+
+<div class="field">
+  <%= label_tag 'Description', nil, :class => 'leftFloat' %>
+  <span class="textarea"><%= @story.description %></span>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="field">
+  <%= label_tag 'Priority' %>
+  <%= @story.priority %>
+</div>
+
+<div class="field">
+  <%= label_tag 'Status' %>
+  <span id="status-field"><%= @story.state %></span>
+</div>
+
+<div class="actions">
+  <%= link_to 'Edit', backlog_path(@story), :class => 'button' %>
+  <%= link_to 'Back', backlogs_path, :class => 'button' %>
+</div>

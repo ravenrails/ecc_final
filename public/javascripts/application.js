@@ -8,13 +8,11 @@ $(document).ready(function() {
 function deleteRecord(params)
 {
   $.loading(params.title);
-  auth = '&authenticity_token=' + encodeURI($('[name="csrf-token"]').attr('content'));
-
 
 	$.ajax({
 		url: params.url,
 		type: 'POST',
-		data: '_method=DELETE' + auth,
+		data: $('#auth-form').serialize() + '&_method=DELETE',
 		dataType: 'js',
     complete: function(xhr) {
       $.finished('Record Deleted');

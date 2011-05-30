@@ -4,7 +4,7 @@ Bard::Application.routes.draw do
 
   devise_for :users
 
-  resource :home, :controller => 'home', :only => [ :index ],  do
+  resource :home, :controller => 'home', :only => [ :index ]  do
       member do
         get "index"
         get "my_account"
@@ -23,6 +23,8 @@ Bard::Application.routes.draw do
     end
   end
 
+  resources :backlogs
+  
   resources :stories do
     post 'add_rating'
     resources :comments

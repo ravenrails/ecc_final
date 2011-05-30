@@ -1,0 +1,28 @@
+
+<h2>Stories List</h2>
+
+<div id="story-list">
+  <%= render 'list' %>
+</div>
+
+<%= link_to 'New Story', new_backlog_path, 
+            :class => 'button' %>
+
+<br />
+
+<%= javascript_tag do %>
+    function deleteStory(urlPath)
+    {
+      $.loading('Destroy Story');
+       $.ajax({
+        url: urlPath,
+        type: 'POST',
+        data: $('#auth-form').serialize() + '&_method=DELETE',
+        dataType: 'text',
+        complete: function(xhr) {
+          eval(xhr.responseText);
+          $.finished('Story successfully destroyed');
+        }
+      });
+    }
+  <% end %>

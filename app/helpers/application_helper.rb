@@ -71,5 +71,24 @@ module ApplicationHelper
 
     html.html_safe
   end
+
+  def render_backlogs_nav
+    link_to('Backlogs', backlogs_path).html_safe if ProjectMember.where('user_id = ? AND (role_id = ? OR role_id = ?)',
+       current_user.id, PROJECT_OWNER.id, PROJECT_MANAGER.id).count > 0
+  end
+  
+  def render_projects_options
+    html = '<option value="">None</option>'
+    
+    current_user.all_projects.each do |proj|
+      html << "<optgroup label='#{proj.name}'>"
+      proj.releases.each do |release|
+        html << "<option value='#{release.id}'>#{release.name}</option>" 
+      end
+      html << '</optgroup>'
+    end
+    
+    html.html_safe
+  end
 end
 

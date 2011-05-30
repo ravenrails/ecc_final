@@ -120,6 +120,7 @@
       $.ajax({
         url: urlPath,
         type: 'GET',
+        data: $('#auth-form').serialize(),
         dataType: 'text',
         complete: function(xhr) {
           eval(xhr.responseText);
@@ -175,7 +176,7 @@
        $.ajax({
         url: urlPath,
         type: 'POST',
-        data: '_method=DELETE',
+        data: $('#auth-form').serialize() + '&_method=DELETE',
         dataType: 'text',
         complete: function(xhr) {
           eval(xhr.responseText);

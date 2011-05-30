@@ -1,7 +1,11 @@
 
 <% @comments.each do |comment| %>
   <div class="comment">
-    <%= comment.creator.fullname %>: &nbsp;
-    <%= comment.content %>
-  </div>
+    <div class="leftFloat" style="width:150px">
+      <%= comment.creator.fullname %>:<br/>
+      
+    </div>
+    <div class="leftFloat"><%= comment.content %></div>
+    <div style="clear:both;"></div>
+  </div><br/>
 <% end %>
