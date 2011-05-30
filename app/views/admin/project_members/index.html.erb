@@ -1,6 +1,6 @@
 <%= render 'navigation' %>
 
-<h2>Project Members</h2>
+<h2>Members</h2>
 <% unless @users.empty? %>
 <table>
   <tr>
@@ -13,7 +13,7 @@
   <% @users.each do |user| %>
     <tr id="row-<%= user.id %>">
       <td><%= user.id %></td>
-      <td><%= user.username %></td>
+      <td><%= link_to user.username, admin_project_member_path(user) %></td>
       <td><%= user.fullname %></td>
       <td><%= link_to 'Edit', edit_admin_project_member_path(user) %></td>
       <td><%= link_to 'Destroy',
