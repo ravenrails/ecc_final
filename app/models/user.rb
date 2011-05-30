@@ -21,14 +21,18 @@ class User < ActiveRecord::Base
   belongs_to :story, :foreign_key => :assigned_to
 
   def fullname
-    return 'blank username' if self.username.nil?
-    return self.username if self.lastname.nil?
+
+    if self.lastname.nil?
+      return 'n/a' if self.username.nil?
+      return self.username
+    end
+
     self.firstname + ' ' + self.lastname
   end
 
   def all_projects
     c = []
-    self.projects.each do |p|
+    self.projects.where(:display => true).each do |p|
       c[p.id] = p if c[p.id].nil?
     end
     c.compact

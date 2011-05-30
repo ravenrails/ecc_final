@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
     @releases = @project.releases
     #render :text => current_user.id
   end
-  
+
   #def create
   # @project = Project.new(params[:project])
   #

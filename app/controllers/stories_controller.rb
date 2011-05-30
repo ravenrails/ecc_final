@@ -76,7 +76,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render :text => %[$('#rating-div').html("<em>Average Rating: #{story.ratings.average(:rate)}</em>")]
+        render :text => %[$('#actual-rating').html("#{story.ratings.average(:rate)}")]
       end
     end
   end
