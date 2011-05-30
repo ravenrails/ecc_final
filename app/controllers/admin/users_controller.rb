@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
     if params[:id].is_a? Numeric
       redirect_to 'list'
     end
-    
+
     @admin = Admin.find(params[:id])
   end
 
@@ -41,7 +41,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
-        format.html { redirect_to(admins_path, :notice => 'Admin was successfully updated.') }
+        format.html { redirect_to(admin_user_path, :notice => 'Admin was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -64,3 +64,4 @@ class Admin::UsersController < ApplicationController
     end
   end
 end
+
