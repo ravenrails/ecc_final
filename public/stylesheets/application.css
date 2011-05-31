@@ -1003,3 +1003,11 @@ a.button {
   width: 490px;
   margin-left: 4px;
 }
+
+table { min-width: 600px; }
+table th { background-color: #171717; color: #96f226; border: 1px solid #111; }
+table th {  }
+table td { text-align: center; }
+table tr:nth-child(odd) { background-color: #ccc;  }
+table tr:nth-child(even) { background-color: #fafafa; }
+table tr:hover { background-color: #bbb;  }

@@ -56,9 +56,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render :update do |page|
-          page.replace_html 'row-' + params[:id], ''
-        end
+        render :text => @admin.id
       end
       format.xml  { head :ok }
     end
