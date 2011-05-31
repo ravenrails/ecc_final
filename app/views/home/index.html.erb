@@ -1,9 +1,15 @@
 <h2>My Stories</h2>
+
 <% unless current_user.stories.empty? %>
   <% current_user.stories.each do |story| %>
     <%= link_to story.name, release_story_path(story.release, story) %>
   <% end %>
 <% else %>
   <%= "You currently do not have any stories." %>
+
+
+<% current_user.stories.each do |story| %>
+  <%= link_to story.name, release_story_path(story.release, story) %><br/>
+
 <% end %>
 

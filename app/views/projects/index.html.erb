@@ -1,5 +1,5 @@
 <h2>My Projects</h2>
 
 <% @projects.each do |project| %>
-  <%= link_to %{#{project.name} (#{pluralize(project.releases.count, "release")})}, project %>
+  <%= link_to %{#{project.name} (#{pluralize(project.releases.count, "release")})}, project %> <br/>
 <% end %>
